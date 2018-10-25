@@ -1,0 +1,3 @@
+Miercoles;Perro Caliente;Con porcion de papas francesas;5600;
+Miercoles;a;a;5;
+Miercoles;qq;q;3;
