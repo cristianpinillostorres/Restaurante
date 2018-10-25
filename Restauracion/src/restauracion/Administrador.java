@@ -498,6 +498,8 @@ public final class Administrador extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, texto);
     }
     public void limpiar(){
+        labelTipo.setText("");
+        codigoPlato.setText("");
         nombrePlato.setText("");
         desPlato.setText("");
         precioPlato.setText("");
@@ -1106,15 +1108,17 @@ public final class Administrador extends javax.swing.JFrame {
 
     private void eliminarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarPlatoActionPerformed
         String a = diaAgregar.getText();
+        String t = labelTipo.getText();
+        String c = codigoPlato.getText();
         String n = nombrePlato.getText();
         String d = desPlato.getText();
         String p = precioPlato.getText();
-         if ((a.equals(""))&&(n.equals(""))&&(d.equals(""))&&(p.equals(""))){
+         if ((n.equals(""))&&(d.equals(""))&&(p.equals(""))&&(c.equals(""))&&(t.equals(""))){
             mensaje("seleccione un plato!");
         }else{ 
             int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar esta plato del menu del dia?","Si/No",0);
             if(confir  == 0){  
-                String linea = a+";"+n+";"+d+";"+p+";";
+                String linea = a+";"+c+";"+t+";"+n+";"+d+";"+p+";";
                 eliminar(linea);
                 listarPlatos();
                 limpiar();
