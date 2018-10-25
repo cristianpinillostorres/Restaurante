@@ -30,7 +30,7 @@ public final class Administrador extends javax.swing.JFrame {
         panelInsertamesero.setVisible(false);
         panelInsetaMesas.setVisible(false);
         //botones
-        guardar.setBackground(new Color(1,28,28));        
+                
     }
     
     /* metodo que crea los archivos del Menu por dia:
@@ -56,6 +56,8 @@ public final class Administrador extends javax.swing.JFrame {
             try{
                 cod  = Integer.parseInt(codigoPlato.getText());     
                 cadena = cadena + cod + ";";
+                dato = labelTipo.getText();
+                cadena = cadena + dato + ";";
                 dato = nombrePlato.getText();
                 cadena = cadena + dato + ";";
                 dato = desPlato.getText();
@@ -87,10 +89,11 @@ public final class Administrador extends javax.swing.JFrame {
         
         String dia = diaAgregar.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
-        
+        tabla.addColumn("codigo");
         tabla.addColumn("Plato");
         tabla.addColumn("Descripcion ");
         tabla.addColumn("Precio ");
+        tabla.addColumn("tipo");
         Object fila[] = new Object[tabla.getColumnCount()];
         
         File archivo = null;  //apuntar al archivo almancenado DD
@@ -107,8 +110,10 @@ public final class Administrador extends javax.swing.JFrame {
       
                 String dato[] = cadena.split(";");
                 fila[0] = dato[1];
-                fila[1] = dato[2];
-                fila[2] = dato[3];
+                fila[1] = dato[3];
+                fila[2] = dato[4];
+                fila[3] = dato[5];
+                fila[4] = dato[2];
                 tabla.addRow(fila);  
                 
 
@@ -128,6 +133,7 @@ public final class Administrador extends javax.swing.JFrame {
         }
         verPlatos.setModel(tabla);
         verPlatos.setRowHeight(20);
+        
     } 
   
     public void eliminar(String lineaBorrar){
@@ -193,7 +199,7 @@ public final class Administrador extends javax.swing.JFrame {
     }
    
    //-----------------------------------------------------------------------------------
-        public void crearTipos(){ 
+        public void crearTipo(){ 
         String ruta = "Menu/Tipos/tipos.txt";
         String dato;
         String cadena=""; 
@@ -206,9 +212,9 @@ public final class Administrador extends javax.swing.JFrame {
             // Inicia captura de datos del usuario
             int cod = 0;
             try{
-                cod  = Integer.parseInt(codigoPlato.getText());     
+                cod  = Integer.parseInt(codigoTipo.getText());     
                 cadena = cadena + cod + ";";
-                dato = nombrePlato.getText();
+                dato = nombreTipo.getText();
                 cadena = cadena + dato + ";";
                     
                 linea.println(cadena); //escribiendo en el archivo
@@ -248,9 +254,11 @@ public final class Administrador extends javax.swing.JFrame {
             while((cadena=linea.readLine()) != null){ //recorre todo el archivo
       
                 String dato[] = cadena.split(";");
-                lista.addElement(dato[0]);
+                lista.addElement(dato[1]);
+                tipos.addItem(dato[1]);
                 
             }
+            
             
          }catch(IOException e){
            System.out.print("Error creando archivo");
@@ -548,11 +556,12 @@ public final class Administrador extends javax.swing.JFrame {
         precioPlato = new javax.swing.JTextField();
         guardar = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
-        semana1 = new javax.swing.JComboBox<>();
+        tipos = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         codigoPlato = new javax.swing.JTextField();
         limpiarCamposMenu = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
+        labelTipo = new javax.swing.JLabel();
         semana = new javax.swing.JComboBox<>();
         panelVerMenus = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -809,7 +818,7 @@ public final class Administrador extends javax.swing.JFrame {
         panelAuxM.add(desPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 340, -1));
         panelAuxM.add(precioPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 340, -1));
 
-        guardar.setBackground(new java.awt.Color(1, 28, 28));
+        guardar.setBackground(new java.awt.Color(51, 51, 51));
         guardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         guardar.setForeground(new java.awt.Color(255, 255, 255));
         guardar.setText("Agregar Plato");
@@ -825,21 +834,22 @@ public final class Administrador extends javax.swing.JFrame {
         jLabel16.setText("Codigo del plato:");
         panelAuxM.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
-        semana1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        semana1.setOpaque(false);
-        semana1.addActionListener(new java.awt.event.ActionListener() {
+        tipos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un tipo:" }));
+        tipos.setOpaque(false);
+        tipos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                semana1ActionPerformed(evt);
+                tiposActionPerformed(evt);
             }
         });
-        panelAuxM.add(semana1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 200, -1));
+        panelAuxM.add(tipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 170, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("Nombre del plato:");
         panelAuxM.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
         panelAuxM.add(codigoPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 340, -1));
 
-        limpiarCamposMenu.setBackground(new java.awt.Color(1, 28, 28));
+        limpiarCamposMenu.setBackground(new java.awt.Color(51, 51, 51));
         limpiarCamposMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         limpiarCamposMenu.setForeground(new java.awt.Color(255, 255, 255));
         limpiarCamposMenu.setText("Limpiar Campos");
@@ -849,13 +859,14 @@ public final class Administrador extends javax.swing.JFrame {
                 limpiarCamposMenuActionPerformed(evt);
             }
         });
-        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 130, 40));
+        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 140, 40));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setText("Tipo de plato:");
         panelAuxM.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        panelAuxM.add(labelTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 130, 20));
 
-        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 530, 260));
+        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 560, 260));
 
         semana.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         semana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un dia:", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", " " }));
@@ -865,12 +876,11 @@ public final class Administrador extends javax.swing.JFrame {
                 semanaActionPerformed(evt);
             }
         });
-        panelMenus.add(semana, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 210, -1));
+        panelMenus.add(semana, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
 
         panelVerMenus.setBackground(new java.awt.Color(204, 204, 204));
         panelVerMenus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-        verPlatos.setBackground(new java.awt.Color(102, 102, 102));
         verPlatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -879,13 +889,21 @@ public final class Administrador extends javax.swing.JFrame {
 
             }
         ));
-        verPlatos.setGridColor(new java.awt.Color(255, 255, 255));
+        verPlatos.setGridColor(new java.awt.Color(204, 204, 204));
+        verPlatos.setSelectionBackground(new java.awt.Color(153, 153, 153));
         verPlatos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 verPlatosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(verPlatos);
+        if (verPlatos.getColumnModel().getColumnCount() > 0) {
+            verPlatos.getColumnModel().getColumn(0).setPreferredWidth(35);
+            verPlatos.getColumnModel().getColumn(1).setPreferredWidth(120);
+            verPlatos.getColumnModel().getColumn(2).setPreferredWidth(200);
+            verPlatos.getColumnModel().getColumn(3).setPreferredWidth(65);
+            verPlatos.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
 
         eliminarPlato.setBackground(new java.awt.Color(51, 51, 51));
         eliminarPlato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -916,19 +934,22 @@ public final class Administrador extends javax.swing.JFrame {
         panelVerMenusLayout.setHorizontalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelVerMenusLayout.createSequentialGroup()
-                .addGap(154, 154, 154)
-                .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 164, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                                .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                                .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157))))))
         );
         panelVerMenusLayout.setVerticalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -941,10 +962,10 @@ public final class Administrador extends javax.swing.JFrame {
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 470, 510));
+        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 500, 510));
 
         panelTiposMenu.setBackground(new java.awt.Color(204, 204, 204));
         panelTiposMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -964,7 +985,7 @@ public final class Administrador extends javax.swing.JFrame {
         panelTiposMenu.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
         panelTiposMenu.add(codigoTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 110, -1));
 
-        eliminarTipo.setBackground(new java.awt.Color(1, 28, 28));
+        eliminarTipo.setBackground(new java.awt.Color(51, 51, 51));
         eliminarTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         eliminarTipo.setForeground(new java.awt.Color(255, 255, 255));
         eliminarTipo.setText("Eliminar");
@@ -982,7 +1003,7 @@ public final class Administrador extends javax.swing.JFrame {
 
         panelTiposMenu.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 160, 170));
 
-        agregarTipo.setBackground(new java.awt.Color(1, 28, 28));
+        agregarTipo.setBackground(new java.awt.Color(51, 51, 51));
         agregarTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         agregarTipo.setForeground(new java.awt.Color(255, 255, 255));
         agregarTipo.setText("Agregar");
@@ -994,7 +1015,7 @@ public final class Administrador extends javax.swing.JFrame {
         });
         panelTiposMenu.add(agregarTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 90, 30));
 
-        editarTipo.setBackground(new java.awt.Color(1, 28, 28));
+        editarTipo.setBackground(new java.awt.Color(51, 51, 51));
         editarTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         editarTipo.setForeground(new java.awt.Color(255, 255, 255));
         editarTipo.setText("Editar");
@@ -1006,11 +1027,11 @@ public final class Administrador extends javax.swing.JFrame {
         });
         panelTiposMenu.add(editarTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 60, 80, 30));
 
-        panelMenus.add(panelTiposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 530, 240));
+        panelMenus.add(panelTiposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 560, 240));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("Seleccione un dia para agregar menú:");
-        panelMenus.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+        panelMenus.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jTabbedPane1.addTab("Menu", panelMenus);
         panelMenus.getAccessibleContext().setAccessibleName("");
@@ -1106,10 +1127,14 @@ public final class Administrador extends javax.swing.JFrame {
     private void verPlatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verPlatosMouseClicked
           int clic_tabla = verPlatos.rowAtPoint(evt.getPoint());
           try{
-            String nombre = ""+verPlatos.getValueAt(clic_tabla,0);
-            String descripcion = ""+verPlatos.getValueAt(clic_tabla,1);
-            String precio = ""+verPlatos.getValueAt(clic_tabla,2);
-               
+            String codigo = ""+verPlatos.getValueAt(clic_tabla,0);
+            String tipo = ""+verPlatos.getValueAt(clic_tabla,4);
+            String nombre = ""+verPlatos.getValueAt(clic_tabla,1);
+            String descripcion = ""+verPlatos.getValueAt(clic_tabla,2);
+            String precio = ""+verPlatos.getValueAt(clic_tabla,3);
+            
+            codigoPlato.setText(codigo);
+            labelTipo.setText(tipo);
             nombrePlato.setText(nombre);
             desPlato.setText(descripcion);
             precioPlato.setText(precio);
@@ -1157,9 +1182,17 @@ public final class Administrador extends javax.swing.JFrame {
         limpiar();
     }//GEN-LAST:event_eliminarTodosPlatosActionPerformed
 
-    private void semana1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_semana1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_semana1ActionPerformed
+    private void tiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tiposActionPerformed
+        
+        int index = tipos.getSelectedIndex();
+        String dato = (String)tipos.getSelectedItem();
+        if(index == 0 ){
+            mensaje("Seleccione un tipo ! ");
+            labelTipo.setText("");
+        }else{
+        labelTipo.setText(dato);
+        }
+    }//GEN-LAST:event_tiposActionPerformed
 
     private void limpiarCamposMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarCamposMenuActionPerformed
         // TODO add your handling code here:
@@ -1170,7 +1203,7 @@ public final class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarTipoActionPerformed
 
     private void agregarTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarTipoActionPerformed
-        crearTipos();
+        crearTipo();
         listarTipos();
     }//GEN-LAST:event_agregarTipoActionPerformed
 
@@ -1235,6 +1268,7 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel labelTipo;
     private javax.swing.JButton limpiarCamposMenu;
     private javax.swing.JList<String> listaTipos;
     private javax.swing.JTextField nombreMesero;
@@ -1252,7 +1286,7 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JPanel panelVerMenus;
     private javax.swing.JTextField precioPlato;
     private javax.swing.JComboBox<String> semana;
-    private javax.swing.JComboBox<String> semana1;
+    private javax.swing.JComboBox<String> tipos;
     private javax.swing.JButton verMesas;
     private javax.swing.JTable verMeseros;
     private javax.swing.JTable verPlatos;
