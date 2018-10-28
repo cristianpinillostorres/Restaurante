@@ -93,7 +93,9 @@ public class VerMesas extends javax.swing.JFrame {
                 cuadro[i][j].setText("Mesa "+id);
                 cuadro[i][j].setName(""+id);       
                 cuadro[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
-               
+                //este es el evento 
+                Controlar bt = new Controlar();
+                cuadro[i][j].addActionListener(bt);
                 panelMesas.add(cuadro[i][j]);
                 
                 
@@ -122,8 +124,9 @@ public class VerMesas extends javax.swing.JFrame {
                 cuadroAux[i][j].setText("Mesa "+id);
                 cuadroAux[i][j].setName(""+id);       
                 cuadroAux[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
-               
-                
+                //este es el evento 
+                Controlar bt = new Controlar();
+                cuadro[i][j].addActionListener(bt);
                 panelAux.add(cuadroAux[i][j]);
                 
                 
@@ -136,23 +139,26 @@ public class VerMesas extends javax.swing.JFrame {
             z+=h + aum;// ubicacion , no cambiar 
         }   
         
-        }
-        
-        
-        
+        }   
     }
-      public void cuadroactionPerformed(ActionEvent e) {
+     
+        
+    
+  
+    private class Controlar implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
             String sillas ="";
             String s; 
                 for (int i = 0 ;  i<filas ; i++){
                     for (int j = 0 ;  j<columnas ; j++){   
                         
-                        if(e.getSource().equals(cuadro[i][j])){
-                            cuadro[i][j].setBackground(new Color(204,0,0));
-                            cuadro[i][j].setForeground(Color.RED); ; 
+                        if(e.getSource().equals(cuadro[i][j])){ // si le da click al boton : 
+                            cuadro[i][j].setBackground(new Color(204,0,0));  // pone el color de fondo rojo ...
+                            cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
                             
-                            s = (cuadro[i][j].getName());
-                            sillas = sillas+s+",";
+                            s = (cuadro[i][j].getName()); // guarda el nombre del boton o ( el numero de mesa) ...
+                            sillas = sillas+s+",";  //lo guarda en el string ... 
                                                        
                         }   
                     }   
@@ -176,11 +182,9 @@ public class VerMesas extends javax.swing.JFrame {
                 System.out.print(sillas);
                
         }
-    
-    
-  
-    
-    
+      
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
