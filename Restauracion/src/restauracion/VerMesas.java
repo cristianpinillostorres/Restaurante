@@ -19,6 +19,8 @@ public class VerMesas extends javax.swing.JFrame {
 
     private int filas = 0; 
     private int columnas = 0;
+    private int fil = 0 ;
+    private int col = 0 ; 
     int numeroMesas;
     private int id = 1 , cont , aux = 0 ;
 
@@ -108,12 +110,12 @@ public class VerMesas extends javax.swing.JFrame {
         }   
         
         if ((aux>0)&&(aux<7)){
-            int f = 1 ;
-            int c = aux ; 
+             fil = 1 ;
+             col = aux ; 
             int k  = ax ,z = ay  ;
-            cuadroAux = new JButton[f][c];
-        for (int i = 0 ;  i<f ; i++){
-             for(int j = 0 ;  j<c ; j++){
+            cuadroAux = new JButton[fil][col];
+        for (int i = 0 ;  i<fil ; i++){
+             for(int j = 0 ;  j<col ; j++){
                 cuadroAux[i][j]= new JButton();
                 cuadroAux[i][j].setIcon(iconolbl);
                 cuadroAux[i][j].setBackground(new Color(139,94,48));
@@ -167,8 +169,8 @@ public class VerMesas extends javax.swing.JFrame {
                 //int f = aux ;
                 //int c = 1 ;
                 
-               for (int i = 0 ;  i<filas ; i++){
-                    for (int j = 0 ;  j<columnas ; j++){     
+               for (int i = 0 ;  i<fil ; i++){
+                    for (int j = 0 ;  j<col ; j++){     
                         if(e.getSource().equals(cuadroAux[i][j])){
                             cuadroAux[i][j].setIcon(comida);  
                             cuadroAux[i][j].setBackground(new Color(204,0,0));
