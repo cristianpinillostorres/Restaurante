@@ -8,6 +8,7 @@ package restauracion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -25,6 +26,8 @@ public class VerMesas extends javax.swing.JFrame {
     JButton[][] cuadro;
     JButton[][] cuadroAux;
     
+        ImageIcon iconolbl = new ImageIcon("src/iconos/m.jpg");
+        
     public VerMesas(String numero ) {
         initComponents();
         numeroMesas = Integer.parseInt(numero);
@@ -81,6 +84,7 @@ public class VerMesas extends javax.swing.JFrame {
         for (int i = 0 ;  i<filas ; i++){
              for(int j = 0 ;  j<columnas ; j++){
                 cuadro[i][j]= new JButton();
+                cuadro[i][j].setIcon(iconolbl);
                 cuadro[i][j].setBackground(new Color(139,94,48));
                 cuadro[i][j].setForeground(new Color(255,255,255));
                 cuadro[i][j].setBorderPainted(false);
@@ -109,6 +113,7 @@ public class VerMesas extends javax.swing.JFrame {
         for (int i = 0 ;  i<f ; i++){
              for(int j = 0 ;  j<c ; j++){
                 cuadroAux[i][j]= new JButton();
+                cuadroAux[i][j].setIcon(iconolbl);
                 cuadroAux[i][j].setBackground(new Color(139,94,48));
                 cuadroAux[i][j].setForeground(new Color(255,255,255));
                 cuadroAux[i][j].setBorderPainted(false);
@@ -136,6 +141,41 @@ public class VerMesas extends javax.swing.JFrame {
         
         
     }
+      public void cuadroactionPerformed(ActionEvent e) {
+            String sillas ="";
+            String s; 
+                for (int i = 0 ;  i<filas ; i++){
+                    for (int j = 0 ;  j<columnas ; j++){   
+                        
+                        if(e.getSource().equals(cuadro[i][j])){
+                            cuadro[i][j].setBackground(new Color(204,0,0));
+                            cuadro[i][j].setForeground(Color.RED); ; 
+                            
+                            s = (cuadro[i][j].getName());
+                            sillas = sillas+s+",";
+                                                       
+                        }   
+                    }   
+                 }
+                int f = aux ;
+                int c = 1 ;
+                for (int i = 0 ;  i<f ; i++){
+                    for (int j = 0 ;  j<c ; j++){   
+                        if(e.getSource().equals(cuadroAux[i][j])){
+                            cuadroAux[i][j].setBackground(new Color(204,0,0));
+                            cuadroAux[i][j].setForeground(Color.white); 
+                            
+                            s = (cuadroAux[i][j].getName());
+                            sillas = sillas+s+",";
+                            
+                           
+                        }   
+                    }   
+                 }
+                
+                System.out.print(sillas);
+               
+        }
     
     
   
@@ -153,9 +193,8 @@ public class VerMesas extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         panelMesas = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         panelAux = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -181,17 +220,6 @@ public class VerMesas extends javax.swing.JFrame {
 
         jPanel2.add(panelMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 730, 380));
 
-        jPanel4.setBackground(new java.awt.Color(255, 51, 51));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("MESAS");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 20, -1, -1));
-
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 80));
-
         panelAux.setBackground(new java.awt.Color(239, 231, 231));
         panelAux.setPreferredSize(new java.awt.Dimension(200, 350));
 
@@ -208,6 +236,9 @@ public class VerMesas extends javax.swing.JFrame {
 
         jPanel2.add(panelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 730, 190));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/comida.jpg"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 10, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,7 +247,7 @@ public class VerMesas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1310, Short.MAX_VALUE)
         );
 
         pack();
@@ -259,9 +290,8 @@ public class VerMesas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel panelAux;
     private javax.swing.JPanel panelMesas;
     // End of variables declaration//GEN-END:variables
