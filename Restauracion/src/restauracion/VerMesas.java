@@ -8,9 +8,16 @@ package restauracion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
+import javax.swing.JOptionPane;
+import java.io.*;
 /**
  *
  * @author familia pinillos
@@ -30,10 +37,15 @@ public class VerMesas extends javax.swing.JFrame {
     
         ImageIcon iconolbl = new ImageIcon("src/iconos/m.jpg");
         ImageIcon comida = new ImageIcon("src/iconos/comida.jpg"); 
+        public VerMesas(){
+            
+        }
     public VerMesas(String numero ) {
         initComponents();
         numeroMesas = Integer.parseInt(numero);
         verMatriz();
+      
+      
     }
     
     
@@ -141,22 +153,27 @@ public class VerMesas extends javax.swing.JFrame {
             z+=h + aum;// ubicacion , no cambiar 
         }   
         
-        }   
+        }  
+        
     }
      
         
     
   
     private class Controlar implements ActionListener{
+         String sillas ="";
+            String s;
         @Override
         public void actionPerformed(ActionEvent e) {
-            String sillas ="";
-            String s; 
+            //String sillas ="";
+            //String s;
                 for (int i = 0 ;  i<filas ; i++){
                     for (int j = 0 ;  j<columnas ; j++){   
                         
                         if(e.getSource().equals(cuadro[i][j])){ // si le da click al boton : 
                             cuadro[i][j].setIcon(comida);  // pone el color de fondo rojo ...
+                            Mesero mes = new Mesero();
+                            mes.setVisible(true);
                             //cuadro[i][j].setBackground(new Color(204,0,0));
                            //cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
                             
@@ -185,11 +202,11 @@ public class VerMesas extends javax.swing.JFrame {
                  }
                 
                 System.out.print(sillas);
-               
         }
-      
+       
         
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

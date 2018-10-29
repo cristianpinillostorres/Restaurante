@@ -5,6 +5,15 @@
  */
 package restauracion;
 
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author familia pinillos
@@ -14,9 +23,55 @@ public class Mesero extends javax.swing.JFrame {
     /**
      * Creates new form Mesero
      */
+    
     public Mesero() {
         initComponents();
+        listarMeseros();
     }
+     public void listarMeseros(){
+        String ruta = "Meseros/meseros.txt";
+        
+        
+        File archivo = null;  //apuntar al archivo almancenado DD
+        FileReader contenido = null;  //acceder a todo el contenido del archivo
+        BufferedReader linea = null; //accede linea a linea al contenido
+        String nombre;
+        try{
+            archivo = new File(ruta);
+            contenido = new FileReader(archivo);
+            linea = new BufferedReader(contenido);
+            
+            String cadena=""; //variable captura los datos del archivo
+            while((cadena=linea.readLine()) != null){ //recorre todo el archivo
+                String dato[] = cadena.split(";");
+                 Random rnd;
+                 rnd = new Random ();
+                int numero=(int) Math.round((Math.random()*1)); 
+                if(numero==0){
+                    nombreM.setText(dato[1]);
+                    idM.setText(dato[0]);
+                }else if(numero==1){
+                }
+                 
+
+            }
+         }catch(IOException e){
+           System.out.print("Error creando archivo");
+        }
+        finally{
+            try{
+                if(contenido != null){
+                    contenido.close();
+                }
+            }catch(IOException e1){
+                System.out.print("Error cerrando archivo");
+            }
+        }
+       
+    }   
+    
+                       
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,10 +85,13 @@ public class Mesero extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        mesero = new javax.swing.JLabel();
+        nombreM = new javax.swing.JLabel();
+        id = new javax.swing.JLabel();
+        TomarOrden = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        idM = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1005, 650));
@@ -51,19 +109,31 @@ public class Mesero extends javax.swing.JFrame {
         jLabel1.setText("MESERO");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, -1, -1));
 
+        mesero.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/mesero.jpg"))); // NOI18N
+        jPanel2.add(mesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, 180));
+
+        nombreM.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        nombreM.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.add(nombreM, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 220, 70));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 650));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Id del mesero: ");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 40, 340, 30));
+        id.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        id.setText("Id del mesero: ");
+        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 230, 30));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jButton1.setText("TOMAR ORDEN ");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 520, 240, 100));
+        TomarOrden.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        TomarOrden.setText("TOMAR ORDEN ");
+        TomarOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TomarOrdenActionPerformed(evt);
+            }
+        });
+        jPanel1.add(TomarOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 420, 240, 100));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Hora de atencion : ");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 340, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 230, 30));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("ver mesas ");
@@ -73,6 +143,10 @@ public class Mesero extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 210, 110));
+
+        idM.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        idM.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(idM, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 170, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,10 +170,16 @@ public class Mesero extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+   VerMesas vm = new VerMesas();
+   vm.setVisible(true);
+   
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void TomarOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TomarOrdenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TomarOrdenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,12 +217,15 @@ public class Mesero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton TomarOrden;
+    private javax.swing.JLabel id;
+    private javax.swing.JLabel idM;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel mesero;
+    private javax.swing.JLabel nombreM;
     // End of variables declaration//GEN-END:variables
 }
