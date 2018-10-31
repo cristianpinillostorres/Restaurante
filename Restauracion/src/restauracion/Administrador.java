@@ -631,6 +631,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         setAutoRequestFocus(false);
         setFocusCycleRoot(false);
         setIconImages(null);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(96, 157, 97));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 51), 5));
@@ -1144,7 +1145,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         fecha.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         fecha.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 300, 30));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 30, 330, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1195,8 +1196,8 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_guardarActionPerformed
 
     private void verMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMesasActionPerformed
-        VerMesas m;
-        m = new VerMesas(numMesas.getText());
+        Mesas m;
+        m = new Mesas(numMesas.getText());
         m.setVisible(true);        
     }//GEN-LAST:event_verMesasActionPerformed
 
