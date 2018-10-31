@@ -1,6 +1,5 @@
 package restauracion;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,19 +9,27 @@ import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.DefaultListModel;
 /**
  *
  * @author familia pinillos
  */
-public final class Administrador extends javax.swing.JFrame {
+public final class Administrador extends javax.swing.JFrame implements Runnable{
 
+    String hora, minutos, segundos, ampm;
+    Thread h1;
+    
     public Administrador() {
         initComponents();
         diseño();
         listarMeseros();
         listarMesas();
         listarTipos();
+        h1 = new Thread(this);
+        h1.start();
         
     }
      
@@ -30,6 +37,8 @@ public final class Administrador extends javax.swing.JFrame {
         panelInsertamesero.setVisible(false);
         panelInsetaMesas.setVisible(false);
         //botones
+        
+        
                 
     }
     
@@ -199,7 +208,7 @@ public final class Administrador extends javax.swing.JFrame {
     }
    
    //-----------------------------------------------------------------------------------
-        public void crearTipo(){ 
+    public void crearTipo(){ 
         String ruta = "Menu/Tipos/tipos.txt";
         String dato;
         String cadena=""; 
@@ -237,7 +246,7 @@ public final class Administrador extends javax.swing.JFrame {
             }
     }
         
-     public void listarTipos(){
+    public void listarTipos(){
         DefaultListModel lista = new DefaultListModel();
         listaTipos.setModel(lista);
         String ruta = "Menu/Tipos/tipos.txt";
@@ -274,10 +283,7 @@ public final class Administrador extends javax.swing.JFrame {
         }
 
     } 
-    
-    
-    
-    
+      
     public void crearMeseros(){
         String ruta = "Meseros/meseros.txt";
         String dato;
@@ -521,29 +527,6 @@ public final class Administrador extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        panelMeseros = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        verMeseros = new javax.swing.JTable();
-        insertarMesero = new javax.swing.JButton();
-        panelInsertamesero = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        idMesero = new javax.swing.JTextField();
-        nombreMesero = new javax.swing.JTextField();
-        guardarMesero = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        eliminarMesero = new javax.swing.JButton();
-        panelMesas = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        verMesas = new javax.swing.JButton();
-        numMesas = new javax.swing.JLabel();
-        cambiaMesas = new javax.swing.JButton();
-        panelInsetaMesas = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        numeroMesas = new javax.swing.JTextField();
-        cambiarMesas = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
         panelMenus = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -583,6 +566,35 @@ public final class Administrador extends javax.swing.JFrame {
         agregarTipo = new javax.swing.JButton();
         editarTipo = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
+        panelMeseros = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        panelInsertamesero = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        idMesero = new javax.swing.JTextField();
+        nombreMesero = new javax.swing.JTextField();
+        guardarMesero = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        verMeseros = new javax.swing.JTable();
+        jLabel12 = new javax.swing.JLabel();
+        eliminarMesero = new javax.swing.JButton();
+        panelMesas = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        verMesas = new javax.swing.JButton();
+        numMesas = new javax.swing.JLabel();
+        cambiaMesas = new javax.swing.JButton();
+        panelInsetaMesas = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        numeroMesas = new javax.swing.JTextField();
+        cambiarMesas = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        fecha = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lbHora = new javax.swing.JLabel();
 
         jTextField2.setText("jTextField2");
 
@@ -592,197 +604,16 @@ public final class Administrador extends javax.swing.JFrame {
         setFocusCycleRoot(false);
         setIconImages(null);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setBackground(new java.awt.Color(96, 157, 97));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 51), 5));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane1.setBackground(new java.awt.Color(89, 133, 111));
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 51), 5));
+        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        panelMeseros.setBackground(new java.awt.Color(204, 204, 204));
-        panelMeseros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
-        jLabel4.setText("ADMINISTRACION DE MESEROS");
-        panelMeseros.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
-
-        verMeseros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Lista de meseros"
-            }
-        ));
-        verMeseros.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                verMeserosMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(verMeseros);
-
-        panelMeseros.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 560, 170));
-
-        insertarMesero.setBackground(new java.awt.Color(51, 51, 51));
-        insertarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        insertarMesero.setForeground(new java.awt.Color(255, 255, 255));
-        insertarMesero.setText("Registrar Mesero");
-        insertarMesero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertarMeseroActionPerformed(evt);
-            }
-        });
-        panelMeseros.add(insertarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 40));
-
-        panelInsertamesero.setBackground(new java.awt.Color(204, 204, 204));
-        panelInsertamesero.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("Id del Mesero :");
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel13.setText("Nombre del Mesero :");
-
-        guardarMesero.setBackground(new java.awt.Color(51, 51, 51));
-        guardarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        guardarMesero.setForeground(new java.awt.Color(255, 255, 255));
-        guardarMesero.setText("Registrar");
-        guardarMesero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                guardarMeseroActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelInsertameseroLayout = new javax.swing.GroupLayout(panelInsertamesero);
-        panelInsertamesero.setLayout(panelInsertameseroLayout);
-        panelInsertameseroLayout.setHorizontalGroup(
-            panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInsertameseroLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(guardarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelInsertameseroLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(idMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelInsertameseroLayout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(nombreMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(72, Short.MAX_VALUE))
-        );
-        panelInsertameseroLayout.setVerticalGroup(
-            panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInsertameseroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(idMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(nombreMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(guardarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panelMeseros.add(panelInsertamesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 560, 140));
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel12.setText("Lista de meseros ");
-        panelMeseros.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 70, -1, -1));
-
-        eliminarMesero.setBackground(new java.awt.Color(51, 51, 51));
-        eliminarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        eliminarMesero.setForeground(new java.awt.Color(255, 255, 255));
-        eliminarMesero.setText("Eliminar Mesero");
-        eliminarMesero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarMeseroActionPerformed(evt);
-            }
-        });
-        panelMeseros.add(eliminarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 130, 40));
-
-        jTabbedPane1.addTab("Meseros", panelMeseros);
-
-        panelMesas.setBackground(new java.awt.Color(204, 204, 204));
-        panelMesas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel14.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
-        jLabel14.setText("ASIGNACION DE LAS MESAS");
-        panelMesas.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
-
-        verMesas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        verMesas.setText("ver mesas ");
-        verMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                verMesasActionPerformed(evt);
-            }
-        });
-        panelMesas.add(verMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 130, 40));
-
-        numMesas.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        panelMesas.add(numMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 60, 20));
-
-        cambiaMesas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cambiaMesas.setText("cambiar numero de mesas");
-        cambiaMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cambiaMesasActionPerformed(evt);
-            }
-        });
-        panelMesas.add(cambiaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 200, 40));
-
-        panelInsetaMesas.setBackground(new java.awt.Color(200, 200, 200));
-        panelInsetaMesas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel15.setText("Ingrese nuevo numero de mesas: ");
-
-        cambiarMesas.setText("Cambiar");
-        cambiarMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cambiarMesasActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelInsetaMesasLayout = new javax.swing.GroupLayout(panelInsetaMesas);
-        panelInsetaMesas.setLayout(panelInsetaMesasLayout);
-        panelInsetaMesasLayout.setHorizontalGroup(
-            panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInsetaMesasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numeroMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cambiarMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        panelInsetaMesasLayout.setVerticalGroup(
-            panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInsetaMesasLayout.createSequentialGroup()
-                .addGroup(panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelInsetaMesasLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(numeroMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel15)))
-                    .addGroup(panelInsetaMesasLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cambiarMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        panelMesas.add(panelInsetaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 490, 70));
-
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel17.setText("El numero actual de mesas es: ");
-        panelMesas.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
-
-        jTabbedPane1.addTab("Mesas", panelMesas);
-
-        panelMenus.setBackground(new java.awt.Color(204, 204, 204));
+        panelMenus.setBackground(new java.awt.Color(190, 234, 190));
         panelMenus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         panelMenus.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -794,7 +625,7 @@ public final class Administrador extends javax.swing.JFrame {
         jLabel5.setText("______________________________________________________________");
         panelMenus.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 480, 20));
 
-        panelAuxM.setBackground(new java.awt.Color(204, 204, 204));
+        panelAuxM.setBackground(new java.awt.Color(201, 233, 201));
         panelAuxM.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         panelAuxM.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -880,7 +711,7 @@ public final class Administrador extends javax.swing.JFrame {
         });
         panelMenus.add(semana, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
 
-        panelVerMenus.setBackground(new java.awt.Color(204, 204, 204));
+        panelVerMenus.setBackground(new java.awt.Color(201, 233, 201));
         panelVerMenus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
 
         verPlatos.setModel(new javax.swing.table.DefaultTableModel(
@@ -939,7 +770,7 @@ public final class Administrador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -969,7 +800,7 @@ public final class Administrador extends javax.swing.JFrame {
 
         panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 500, 510));
 
-        panelTiposMenu.setBackground(new java.awt.Color(204, 204, 204));
+        panelTiposMenu.setBackground(new java.awt.Color(201, 233, 201));
         panelTiposMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         panelTiposMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -999,11 +830,11 @@ public final class Administrador extends javax.swing.JFrame {
         });
         panelTiposMenu.add(eliminarTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 80, 30));
 
-        listaTipos.setBackground(new java.awt.Color(195, 195, 195));
+        listaTipos.setBackground(new java.awt.Color(241, 245, 238));
         listaTipos.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(153, 153, 153)));
         jScrollPane3.setViewportView(listaTipos);
 
-        panelTiposMenu.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 160, 170));
+        panelTiposMenu.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 160, 160));
 
         agregarTipo.setBackground(new java.awt.Color(51, 51, 51));
         agregarTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1035,20 +866,256 @@ public final class Administrador extends javax.swing.JFrame {
         jLabel19.setText("Seleccione un dia para agregar menú:");
         panelMenus.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
-        jTabbedPane1.addTab("Menu", panelMenus);
+        jTabbedPane1.addTab("Menu ", panelMenus);
         panelMenus.getAccessibleContext().setAccessibleName("");
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1110, 690));
+        panelMeseros.setBackground(new java.awt.Color(190, 234, 190));
+        panelMeseros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel4.setText("ADMINISTRACION DE MESEROS");
+        panelMeseros.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
+
+        panelInsertamesero.setBackground(new java.awt.Color(201, 233, 201));
+        panelInsertamesero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("Id del Mesero :");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("Nombre del Mesero :");
+
+        guardarMesero.setBackground(new java.awt.Color(51, 51, 51));
+        guardarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        guardarMesero.setForeground(new java.awt.Color(255, 255, 255));
+        guardarMesero.setText("Registrar");
+        guardarMesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardarMeseroActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelInsertameseroLayout = new javax.swing.GroupLayout(panelInsertamesero);
+        panelInsertamesero.setLayout(panelInsertameseroLayout);
+        panelInsertameseroLayout.setHorizontalGroup(
+            panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInsertameseroLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(guardarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelInsertameseroLayout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(idMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelInsertameseroLayout.createSequentialGroup()
+                            .addComponent(jLabel13)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(nombreMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+        panelInsertameseroLayout.setVerticalGroup(
+            panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInsertameseroLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(idMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(panelInsertameseroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(nombreMesero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64)
+                .addComponent(guardarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(111, Short.MAX_VALUE))
+        );
+
+        panelMeseros.add(panelInsertamesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 510, 300));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel23.setText("______________________________________________________________________");
+        panelMeseros.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 550, 20));
+
+        jPanel4.setBackground(new java.awt.Color(201, 233, 201));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
+        jPanel4.setForeground(new java.awt.Color(204, 204, 204));
+
+        verMeseros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Lista de meseros"
+            }
+        ));
+        verMeseros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verMeserosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(verMeseros);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setText("Lista de meseros ");
+
+        eliminarMesero.setBackground(new java.awt.Color(51, 51, 51));
+        eliminarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        eliminarMesero.setForeground(new java.awt.Color(255, 255, 255));
+        eliminarMesero.setText("Eliminar Mesero");
+        eliminarMesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarMeseroActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(eliminarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel12)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(eliminarMesero, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        panelMeseros.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 120, 490, 300));
+
+        jTabbedPane1.addTab("Meseros ", panelMeseros);
+
+        panelMesas.setBackground(new java.awt.Color(204, 204, 204));
+        panelMesas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        jLabel14.setText("ASIGNACION DE LAS MESAS");
+        panelMesas.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, -1, -1));
+
+        verMesas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        verMesas.setText("ver mesas ");
+        verMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verMesasActionPerformed(evt);
+            }
+        });
+        panelMesas.add(verMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 130, 40));
+
+        numMesas.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        panelMesas.add(numMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, 60, 20));
+
+        cambiaMesas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cambiaMesas.setText("cambiar numero de mesas");
+        cambiaMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiaMesasActionPerformed(evt);
+            }
+        });
+        panelMesas.add(cambiaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 200, 40));
+
+        panelInsetaMesas.setBackground(new java.awt.Color(200, 200, 200));
+        panelInsetaMesas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel15.setText("Ingrese nuevo numero de mesas: ");
+
+        cambiarMesas.setText("Cambiar");
+        cambiarMesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiarMesasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelInsetaMesasLayout = new javax.swing.GroupLayout(panelInsetaMesas);
+        panelInsetaMesas.setLayout(panelInsetaMesasLayout);
+        panelInsetaMesasLayout.setHorizontalGroup(
+            panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInsetaMesasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numeroMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(cambiarMesas, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelInsetaMesasLayout.setVerticalGroup(
+            panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInsetaMesasLayout.createSequentialGroup()
+                .addGroup(panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelInsetaMesasLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(panelInsetaMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(numeroMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15)))
+                    .addGroup(panelInsetaMesasLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(cambiarMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        panelMesas.add(panelInsetaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 490, 70));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel17.setText("El numero actual de mesas es: ");
+        panelMesas.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelMesas.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, -1, -1));
+
+        jTabbedPane1.addTab("Mesas ", panelMesas);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1130, 680));
+
+        jPanel3.setBackground(new java.awt.Color(0, 102, 51));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fecha.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
+        fecha.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 30, 300, 30));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ADMINISTRADOR");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 14, -1, -1));
+
+        lbHora.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
+        lbHora.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel3.add(lbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 30, 110, 30));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1110, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -1082,11 +1149,6 @@ public final class Administrador extends javax.swing.JFrame {
         m = new VerMesas(numMesas.getText());
         m.setVisible(true);        
     }//GEN-LAST:event_verMesasActionPerformed
-
-    private void insertarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertarMeseroActionPerformed
-        panelInsertamesero.setVisible(true);
-        limpiarCamposMeseros();
-    }//GEN-LAST:event_insertarMeseroActionPerformed
 
     private void guardarMeseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarMeseroActionPerformed
         crearMeseros();
@@ -1215,18 +1277,6 @@ public final class Administrador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_editarTipoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-       
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Administrador().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarTipo;
@@ -1242,10 +1292,11 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JButton eliminarPlato;
     private javax.swing.JButton eliminarTipo;
     private javax.swing.JButton eliminarTodosPlatos;
+    private javax.swing.JLabel fecha;
     private javax.swing.JButton guardar;
     private javax.swing.JButton guardarMesero;
     private javax.swing.JTextField idMesero;
-    private javax.swing.JButton insertarMesero;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1259,6 +1310,7 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1267,12 +1319,16 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel labelTipo;
+    private javax.swing.JLabel lbHora;
     private javax.swing.JButton limpiarCamposMenu;
     private javax.swing.JList<String> listaTipos;
     private javax.swing.JTextField nombreMesero;
@@ -1295,4 +1351,36 @@ public final class Administrador extends javax.swing.JFrame {
     private javax.swing.JTable verMeseros;
     private javax.swing.JTable verPlatos;
     // End of variables declaration//GEN-END:variables
+
+   @Override
+    public void run() {
+        Thread ct = Thread.currentThread();
+        Calendar calendar = Calendar.getInstance();
+        String [] dias = {"","Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
+        String [] meses = {"","Enero","Febrero","Marzo","Abril","Mayo","junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+        fecha.setText(dias[(calendar.get(7))]+" - "+(calendar.get(5))+" de "+meses[(calendar.get(2)+1)]+" del "+(calendar.get(1))+" ,");
+        
+        while (ct == h1) {
+            calcula();
+            lbHora.setText(hora + ":" + minutos + ":" + segundos + " " + ampm);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+    public void calcula() {
+        Calendar calendario = new GregorianCalendar();
+        Date fechaHoraActual = new Date();
+        calendario.setTime(fechaHoraActual);
+        ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        if (ampm.equals("PM")) {
+            int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+            hora = h > 9 ? "" + h : "0" + h;
+        } else {
+            hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        }
+        minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND) : "0" + calendario.get(Calendar.SECOND);
+    }
 }
