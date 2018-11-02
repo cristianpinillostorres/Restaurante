@@ -1,2 +1,2 @@
-1;jose Perez;
-2;Carlos Perez;
+1;Mesero 1;Meseros\mesero.jpg;
+2;Mesero2;Meseros\mesero1.jpg;

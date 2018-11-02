@@ -33,12 +33,14 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
             e.printStackTrace();
         } 
         initComponents();
+        h1 = new Thread(this);
+        h1.start();
         diseño();
+        
         listarMesas();
         listarTipos();
         listarMeseros();
-        h1 = new Thread(this);
-        h1.start();
+        
         
     }
      
@@ -109,7 +111,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     public void listarPlatos(){
         DefaultTableModel tabla = new DefaultTableModel();
         
-        String dia = diaAgregar.getText();
+        String dia = diaSel.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
         tabla.addColumn("codigo");
         tabla.addColumn("Plato");
@@ -162,7 +164,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     public void eliminar(String lineaBorrar){
         String dia = diaAgregar.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
-        System.out.print(ruta);
         try{
             File archivo = new File(ruta);
             File archivoTemporal = new File(archivo.getAbsolutePath() + ".tmp");//crea el archivo temporal
@@ -199,7 +200,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     public void eliminarTodosPlatos(){
         String dia = diaAgregar.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
-        System.out.print(ruta);
         File archivo = new File(ruta);
         File archivoTemporal = new File(archivo.getName() + ".tmp");//crea el archivo temporal   
 
@@ -353,6 +353,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         
         tabla.addColumn("Id");
         tabla.addColumn("Nombre del Mesero");
+        tabla.addColumn("ruta imagen");
 
         Object fila[] = new Object[tabla.getColumnCount()];
         
@@ -369,6 +370,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 String dato[] = cadena.split(";");
                 fila[0] = dato[0];
                 fila[1] = dato[1];
+                fila[2] = dato[2];
                
                 tabla.addRow(fila);  
 
@@ -561,7 +563,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         jLabel5 = new javax.swing.JLabel();
         panelAuxM = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         diaAgregar = new javax.swing.JLabel();
@@ -577,12 +578,14 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         jLabel20 = new javax.swing.JLabel();
         labelTipo = new javax.swing.JLabel();
         semana = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
         panelVerMenus = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         verPlatos = new javax.swing.JTable();
         eliminarPlato = new javax.swing.JButton();
         eliminarTodosPlatos = new javax.swing.JButton();
         diaSel = new javax.swing.JLabel();
+        diaSel1 = new javax.swing.JLabel();
         panelTiposMenu = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         nombreTipo = new javax.swing.JTextField();
@@ -592,7 +595,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         jScrollPane3 = new javax.swing.JScrollPane();
         listaTipos = new javax.swing.JList<>();
         agregarTipo = new javax.swing.JButton();
-        jLabel19 = new javax.swing.JLabel();
         panelMeseros = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -666,25 +668,21 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel11.setText("Día a agregar:");
-        panelAuxM.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel8.setText("Tipo de plato:");
-        panelAuxM.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        panelAuxM.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel9.setText("Descripcion del plato:");
-        panelAuxM.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        panelAuxM.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel10.setText("Precio del plato:");
-        panelAuxM.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+        panelAuxM.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         diaAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        panelAuxM.add(diaAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 340, 20));
-        panelAuxM.add(nombrePlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 340, -1));
-        panelAuxM.add(desPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 340, -1));
-        panelAuxM.add(precioPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 340, -1));
+        panelAuxM.add(diaAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 50, 340, 20));
+        panelAuxM.add(nombrePlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 360, 20));
+        panelAuxM.add(desPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, 340, -1));
+        panelAuxM.add(precioPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 360, -1));
 
         guardar.setBackground(new java.awt.Color(9, 88, 59));
         guardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -696,11 +694,11 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 guardarActionPerformed(evt);
             }
         });
-        panelAuxM.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, 130, 40));
+        panelAuxM.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, 130, 40));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setText("Codigo del plato:");
-        panelAuxM.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+        panelAuxM.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
         tipos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tipos.setOpaque(false);
@@ -709,12 +707,12 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 tiposActionPerformed(evt);
             }
         });
-        panelAuxM.add(tipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 170, -1));
+        panelAuxM.add(tipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 170, -1));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("Nombre del plato:");
-        panelAuxM.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
-        panelAuxM.add(codigoPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 340, -1));
+        panelAuxM.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        panelAuxM.add(codigoPlato, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 360, -1));
 
         limpiarCamposMenu.setBackground(new java.awt.Color(9, 88, 59));
         limpiarCamposMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -726,14 +724,12 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 limpiarCamposMenuActionPerformed(evt);
             }
         });
-        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 140, 40));
+        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 140, 40));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setText("Tipo de plato:");
-        panelAuxM.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
-        panelAuxM.add(labelTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 130, 20));
-
-        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 560, 260));
+        panelAuxM.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        panelAuxM.add(labelTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 130, 20));
 
         semana.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         semana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un dia:", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", " " }));
@@ -743,7 +739,13 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 semanaActionPerformed(evt);
             }
         });
-        panelMenus.add(semana, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
+        panelAuxM.add(semana, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 210, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel19.setText("Seleccione un dia para agregar menú:");
+        panelAuxM.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 560, 290));
 
         panelVerMenus.setBackground(new java.awt.Color(201, 233, 201));
         panelVerMenus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -797,43 +799,51 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         diaSel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
+        diaSel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        diaSel1.setText("Menu del dia:");
+
         javax.swing.GroupLayout panelVerMenusLayout = new javax.swing.GroupLayout(panelVerMenus);
         panelVerMenus.setLayout(panelVerMenusLayout);
         panelVerMenusLayout.setHorizontalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(diaSel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
             .addGroup(panelVerMenusLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(panelVerMenusLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                                .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                                .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(157, 157, 157))))))
+                    .addGroup(panelVerMenusLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelVerMenusLayout.setVerticalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelVerMenusLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(diaSel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
                 .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addGap(29, 29, 29)
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
-        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 110, 500, 510));
+        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 500, 540));
 
         panelTiposMenu.setBackground(new java.awt.Color(201, 233, 201));
         panelTiposMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -878,10 +888,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         panelTiposMenu.add(agregarTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 90, 30));
 
         panelMenus.add(panelTiposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 560, 240));
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel19.setText("Seleccione un dia para agregar menú:");
-        panelMenus.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jTabbedPane1.addTab("Menu ", panelMenus);
         panelMenus.getAccessibleContext().setAccessibleName("");
@@ -1221,7 +1227,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
     private void verMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMesasActionPerformed
         Mesas m;
-        m = new Mesas(numMesas.getText());
+        m = new Mesas();
         m.setVisible(true);        
     }//GEN-LAST:event_verMesasActionPerformed
 
@@ -1378,6 +1384,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private javax.swing.JTextField desPlato;
     private javax.swing.JLabel diaAgregar;
     private javax.swing.JLabel diaSel;
+    private javax.swing.JLabel diaSel1;
     private javax.swing.JButton eliminarMesero;
     private javax.swing.JButton eliminarPlato;
     private javax.swing.JButton eliminarTodosPlatos;
@@ -1408,7 +1415,6 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -1455,7 +1461,8 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         String [] dias = {"","Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
         String [] meses = {"","Enero","Febrero","Marzo","Abril","Mayo","junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
         fecha.setText(dias[(calendar.get(7))]+" - "+(calendar.get(5))+" de "+meses[(calendar.get(2)+1)]+" del "+(calendar.get(1))+" ,");
-        
+        diaSel.setText(dias[(calendar.get(7))]);
+        listarPlatos();
         while (ct == h1) {
             calcula();
             lbHora.setText(hora + ":" + minutos + ":" + segundos + " " + ampm);

@@ -172,8 +172,8 @@ public class VerMesas extends javax.swing.JFrame {
                         
                         if(e.getSource().equals(cuadro[i][j])){ // si le da click al boton : 
                             cuadro[i][j].setIcon(comida);  // pone el color de fondo rojo ...
-                            Mesero mes = new Mesero();
-                            mes.setVisible(true);
+                            //Mesero mes = new Mesero();
+                            //mes.setVisible(true);
                             //cuadro[i][j].setBackground(new Color(204,0,0));
                            //cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
                             
