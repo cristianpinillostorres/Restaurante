@@ -29,6 +29,8 @@ public class Mesas extends javax.swing.JFrame {
         initComponents();
         numeroMesas = Integer.parseInt(numero);
         verMatriz();
+        
+        int  precio;
     }
     
     
