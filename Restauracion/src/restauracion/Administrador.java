@@ -504,12 +504,18 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
             int num = 0 ;
                 try{
                     num  = Integer.parseInt(numeroMesas.getText()); 
+                    
+                    /*if(num <10){
+                    mensaje("ERROOR!!! El numero De Mesas No Puede Ser Menor A 10");
+                    }else if(num>10){*/
                     cadena = num + ";";
                     linea.println(cadena); //escribiendo en el archivo
+                    numMesas.setText(String.valueOf(num));
+                    
                 }catch(NumberFormatException ece){
                     mensaje("El valor del id no es un numero !!!!");
             }
-                    numMesas.setText(String.valueOf(num));
+                    
                     
             }catch(IOException e){
                     System.out.print("Error creando archivo");
@@ -1244,8 +1250,15 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
     private void cambiarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarMesasActionPerformed
         
-        numeroMesas();
-        panelInsetaMesas.setVisible(false);
+        
+         int num  = Integer.parseInt(numeroMesas.getText()); 
+         if(num <10){
+            mensaje("ERROOR!!! El numero De Mesas No Puede Ser Menor A 10");
+       // panelInsetaMesas.setVisible(false);
+        }else{
+             numeroMesas();
+           panelInsetaMesas.setVisible(false);       
+        }
         numeroMesas.setText("");
     }//GEN-LAST:event_cambiarMesasActionPerformed
 
