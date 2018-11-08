@@ -153,15 +153,6 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         int ai = 0 ;
         int ax = 0 ;
         int tam = 18 ;
-        if(numeroMesas == 1){ filas = 1; columnas =1; aux = 0; x =250 ; y =80 ; l =250 ; h =250 ; aum = 60 ;}
-        if(numeroMesas == 2){ filas = 1; columnas =2; aux = 0; x =70 ; y =80 ; l =250 ; h =250 ; aum = 50 ;}
-        if(numeroMesas == 3){ filas = 1; columnas =3; aux = 0; x =20 ; y =80 ; l =190 ; h =250 ; aum = 50 ;}
-        if(numeroMesas == 4){ filas = 2; columnas =2; aux = 0; x =100 ; y =20 ; l =230 ; h =150 ; aum = 45 ; ai = 100;}
-        if(numeroMesas == 5){ filas = 2; columnas =2; aux = 1; x =100 ; y =20 ; l =230 ; h =150 ; aum = 40 ; ai = 100; ay = 15; ax= 250;}
-        if(numeroMesas == 6){ filas = 2; columnas =3; aux = 0; x =70 ; y =30 ; l =170 ; h =150 ; aum = 30 ; ai = 70; ay = 5; ax= 70;}
-        if(numeroMesas == 7){ filas = 2; columnas =3; aux = 1; x =70 ; y =30 ; l =170 ; h =150 ; aum = 30 ; ai = 70; ay = 5; ax= 270;}
-        if(numeroMesas == 8){ filas = 2; columnas =3; aux = 2; x =70 ; y =30 ; l =170 ; h =150 ; aum = 30 ; ai = 70; ay = 5; ax= 70;}
-        if(numeroMesas == 9){ filas = 2; columnas =3; aux = 3;  x =70 ; y =30 ; l =170 ; h =150 ; aum = 30 ; ai = 70; ay = 5; ax= 70;} 
         if(numeroMesas == 10){ filas = 3; columnas =3; aux = 1; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 270;} 
         if(numeroMesas == 11){ filas = 3; columnas =3; aux = 2; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 70;} 
         if(numeroMesas == 12){ filas = 3; columnas =3; aux = 3; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 70;} 
