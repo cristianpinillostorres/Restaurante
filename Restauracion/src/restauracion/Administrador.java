@@ -534,8 +534,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private void mensaje(String texto){
         JOptionPane.showMessageDialog(null, texto);
     }
-    public void limpiar(){
-        labelTipo.setText("");
+    public void limpiar(){    
         codigoPlato.setText("");
         nombrePlato.setText("");
         desPlato.setText("");
