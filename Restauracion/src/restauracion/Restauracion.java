@@ -21,10 +21,8 @@ public class Restauracion {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-      Administrador ventana =  new Administrador();
+      Ventana_Inicio ventana =  new Ventana_Inicio();
       ventana.setVisible(true);
-      Mesas ventana1 =  new Mesas();
-      ventana1.setVisible(true);
     }
     
       
