@@ -93,8 +93,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         String ruta = "Mesas/mesasOcupadas.txt"; 
         File archivo = null;  //apuntar al archivo almancenado DD
         FileReader contenido = null;  //acceder a todo el contenido del archivo
-        BufferedReader linea = null; //accede linea a linea al contenido
-         
+        BufferedReader linea = null; //accede linea a linea al contenido    
         try{
             archivo = new File(ruta);
             contenido = new FileReader(archivo);
@@ -123,7 +122,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         }
     }
     
-     public void guardarMesa(String cadena){ 
+    public void guardarMesa(String cadena){ 
        
         String ruta = "Mesas/mesasOcupadas.txt";
         FileWriter fichero = null;  //objeto principal (archivo)
@@ -145,13 +144,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         }
     }
     
-    
-
-    
     public void buscarPedidos(String mesa){
         DefaultListModel modelo = new DefaultListModel();
-        modelo.addElement("Can    Plato");
-        String ruta = "Pedido/"+mesa+".txt"; 
+        String ruta = "Pedidos/pedido"+mesa+".txt"; 
         File archivo = null;  //apuntar al archivo almancenado DD
         FileReader contenido = null;  //acceder a todo el contenido del archivo
         BufferedReader linea = null; //accede linea a linea al contenido
@@ -160,25 +155,21 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
             archivo = new File(ruta);
             contenido = new FileReader(archivo);
             linea = new BufferedReader(contenido);
-            
+            modelo.addElement(" Can         Plato");
             String cadena=""; //variable captura los datos del archivo
             while((cadena=linea.readLine()) != null){ //recorre todo el archivo
                 String dato[] = cadena.split(";");
-                String lista = dato[1]+"   "+dato[0];
+                String lista = "  "+dato[1]+"           "+dato[0];
                 modelo.addElement(lista);
 
             }
-         }catch(IOException e){
-           System.out.print("Error creando archivo");
-        }
+        }catch(IOException e){}
         finally{
             try{
                 if(contenido != null){
                     contenido.close();
                 }
-            }catch(IOException e1){
-                System.out.print("Error cerrando archivo");
-            }
+            }catch(IOException e1){}
         }
         pedidos.setModel(modelo);
     } 
@@ -222,13 +213,13 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
     
         for (int i = 0 ;  i<filas ; i++){
              for(int j = 0 ;  j<columnas ; j++){
-                cuadro[i][j]= new JButton();
-                cuadro[i][j].setBounds(x,y,l,h); 
+                cuadro[i][j]= new JButton();//crea el boton
+                cuadro[i][j].setBounds(x,y,l,h); //cordenadas en el panel
                 cuadro[i][j].setBorderPainted(true);
-                cuadro[i][j].setName("Mesa"+id);
-                cuadro[i][j].setText("Mesa "+id);
-                cuadro[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
-                cuadro[i][j].setBackground(new Color(114,216,114));
+                cuadro[i][j].setName("Mesa"+id);//nombreVariable
+                cuadro[i][j].setText("Mesa "+id);//texto del boton
+                cuadro[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); //fuente 
+                cuadro[i][j].setBackground(new Color(114,216,114)); //color
                 
                 //este es el evento 
                 Controlar bt = new Controlar();
@@ -237,7 +228,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 cuadro[i][j].addMouseListener(boton);
                 panelMesas.add(cuadro[i][j]);                
                 id ++;
-                x+=l+aum; // ubicacion en el panell no cambiar  
+                x+=l+aum; // ubicacion en el panell no cambiar 
+                
+                //valida si hay una mesa oucpada y desabilita el boton 
                  for (int t = 0 ; t < ocupadas.size() ; t ++){
                      if ((ocupadas.get(t)[0]) == null ? cuadro[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadro[i][j].getName())){
                     cuadro[i][j].setBackground(new Color(255,51,51));
@@ -250,11 +243,8 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                  
           }
             x = ai; // ubicacion , no cambiar 
-            y+=h+aum;// ubicacion , no cambiar 
-           
+            y+=h+aum;// ubicacion , no cambiar  
         }   
-     
-        int ayuda = filas * columnas ;
         if ((aux>0)&&(aux<7)){
              fil = 1 ;
              col = aux ; 
@@ -278,11 +268,12 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 panelAux.add(cuadroAux[i][j]);             
                 id ++;
                 
-                k+=l+aum; // ubicacion en el panell no cambiar  
+                k+=l+aum; // ubicacion en el panel no cambiar  
+                
                 for (int t = 0 ; t < ocupadas.size() ; t ++){
                      if ((ocupadas.get(t)[0]) == null ? cuadroAux[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadroAux[i][j].getName())){
                     cuadroAux[i][j].setBackground(new Color(255,51,51));
-                    cuadroAux[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
+                    cuadroAux[i][j].setForeground(Color.white);  // pone el color de letra blanco ...
                     cuadroAux[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
                     cuadroAux[i][j].setEnabled(false);
                     
@@ -334,23 +325,46 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
     private class Control implements MouseListener{
         @Override
         public void mouseEntered(MouseEvent evt) {
-            Color color = new Color(255,51,51);
+            String nombre="";
             for(int i = 0 ;  i<filas ; i++){
                 for (int j = 0 ;  j<columnas ; j++){ 
-                    if(cuadro[i][j].getBackground()==color){
-                        String nombre = cuadro[i][j].getText(); 
-                        titulo.setText(nombre);
-                        String s = (cuadro[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ... 
-                        buscarPedidos(cuadro[i][j].getName());
-                    }
-                }   
-            }
+                   if(evt.getSource().equals(cuadro[i][j])){ 
+                        for (int t = 0 ; t < ocupadas.size() ; t ++){
+                            if ((ocupadas.get(t)[0]) == null ? cuadro[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadro[i][j].getName())){
+                            nombre = cuadro[i][j].getText(); 
+                            titulo.setText(nombre);
+                            buscarPedidos(cuadro[i][j].getName());
+                            }else {
+                                nombre = cuadro[i][j].getText();
+                                titulo.setText(nombre);
+                                DefaultListModel modelo = new DefaultListModel(); 
+                                pedidos.setModel(modelo); 
+                            }     
+                        }
+                    }   
+                }
+            }    
             for (int i = 0 ;  i<fil ; i++){
-                for (int j = 0 ;  j<col ; j++){                         
+                for (int j = 0 ;  j<col ; j++){
+                    if(evt.getSource().equals(cuadroAux[i][j])){ 
+                        for (int t = 0 ; t < ocupadas.size() ; t ++){
+                            if ((ocupadas.get(t)[0]) == null ? cuadroAux[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadroAux[i][j].getName())){
+                            nombre = cuadroAux[i][j].getText(); 
+                            titulo.setText(nombre);
+                            buscarPedidos(cuadroAux[i][j].getName());
+                            }else {
+                                nombre = cuadroAux[i][j].getText();
+                                titulo.setText(nombre);
+                                DefaultListModel modelo = new DefaultListModel(); 
+                                pedidos.setModel(modelo); 
+                            }     
+                        }
+                    }
                 }   
             } 
             
         }      
+        @Override
         public void mouseReleased(MouseEvent arg0){}
         @Override
         public void mousePressed(MouseEvent arg0){}
