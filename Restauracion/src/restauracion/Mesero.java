@@ -146,6 +146,7 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
                            
                            TormarPedido nuevoPedido = new TormarPedido(mesaAtender.getText(),cuadro[i].getName());
                            nuevoPedido.setVisible(true);
+                           Mesero.this.dispose();
                                                  
                         }   
                     }                

@@ -1,0 +1,2 @@
+Caldo con papa;5;4500;22500.0;no;
+Caldo con papa;2;4500;9000.0;sin cebolla;

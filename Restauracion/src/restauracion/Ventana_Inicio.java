@@ -159,7 +159,7 @@ public class Ventana_Inicio extends javax.swing.JFrame {
 
     private void cajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cajaActionPerformed
 
-        Ventana_Inicio.this.dispose();
+        
     }//GEN-LAST:event_cajaActionPerformed
 
     private void cocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cocinaActionPerformed

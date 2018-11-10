@@ -5,14 +5,20 @@
  */
 package restauracion;
 
+import java.awt.Desktop;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class TormarPedido extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Thread h1;
-    
+    List<String[]> pedido = new ArrayList<>();
     static double total;
     double sub_total;
     double iv;
@@ -83,8 +89,6 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
                 fila[3] = dato[2];
                 fila[4] = dato[5];
                 tabla.addRow(fila);  
-                
-
             }
             
          }catch(IOException e){
@@ -102,6 +106,26 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
         verPlatos.setModel(tabla);
         verPlatos.setRowHeight(20);
     } 
+    
+    private void guardarPedido(){
+        String mesa = mesaAtend.getText();
+        try {
+            String ruta = "Pedidos/pedido"+mesa+".txt";
+            BufferedWriter linea = new BufferedWriter(new FileWriter(ruta ));
+
+            for (int i = 0 ; i < pedidos.getRowCount(); i++){
+                for(int j = 0 ; j < pedidos.getColumnCount();j++){
+                    linea.write((String) (pedidos.getValueAt(i,j)));
+                    linea.write(";");    
+                }
+                linea.newLine(); //inserta nueva linea.
+            }
+            linea.close(); //cierra archivo!
+            
+        } catch (IOException e) {
+            System.out.println("ERROR: Ocurrio un problema al salvar el archivo!" + e.getMessage());
+        }
+    }
     
     private void mensaje(String texto){
         JOptionPane.showMessageDialog(null, texto);
@@ -132,7 +156,7 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
         quitarProduc = new javax.swing.JButton();
         quitarCantidad = new javax.swing.JButton();
         sumarCantidad = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        enviarPedido = new javax.swing.JButton();
         cambios = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         verPlatos = new javax.swing.JTable();
@@ -263,16 +287,16 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
         });
         jPanel3.add(sumarCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 60, 50, 30));
 
-        jButton2.setBackground(new java.awt.Color(255, 51, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Enviar Pedido");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        enviarPedido.setBackground(new java.awt.Color(255, 51, 0));
+        enviarPedido.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        enviarPedido.setForeground(new java.awt.Color(255, 255, 255));
+        enviarPedido.setText("Enviar Pedido");
+        enviarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                enviarPedidoActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 150, 40));
+        jPanel3.add(enviarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 150, 40));
 
         jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 680, 450));
 
@@ -408,7 +432,7 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
         DefaultTableModel tabla = new DefaultTableModel();
         int filaSel = verPlatos.getSelectedRow();
         try{ 
-            String codigo,plato,descripcion,tipo,precio,cant,importe,obs;
+            String codigo,plato,descripcion,tipo,precio,cant,importe,obs,aux;
             double calcula=0.0,x=0.0,iva=0.0;
             int canti=0;
             
@@ -423,6 +447,11 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
                 precio = verPlatos.getValueAt(filaSel,4).toString();
                 cant = cantidad.getText();
                 obs = observaciones.getText();
+                System.out.print("-"+obs+"-");
+                if (obs.equals("")){
+                   aux = "no";
+                   obs =aux;
+                }
                 
                 //CALCULOS
                 
@@ -431,6 +460,9 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
                
                tabla=(DefaultTableModel) pedidos.getModel();
                String filaelemento[] = {plato,cant,precio,importe,obs};
+               
+               pedido.add(new String[]{plato,cant,precio,importe,obs});
+               
                tabla.addRow(filaelemento);
                
                calcula = (Double.parseDouble(precio)* Integer.parseInt(cantidad.getText()));
@@ -489,9 +521,20 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
         }
     }//GEN-LAST:event_quitarProducActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void enviarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarPedidoActionPerformed
+       int resp;
+       resp=JOptionPane.showConfirmDialog (null,"Esta seguro de enviar el pedido","ENVIAR",JOptionPane.YES_NO_OPTION); 
+       if(resp == JOptionPane.YES_OPTION){ 
+           guardarPedido();
+           factura  fact = new factura(pedido); 
+           try {
+            File path = new File ("Factura/factura.pdf");
+            Desktop.getDesktop().open(path);
+           }catch (IOException ex) {
+            ex.printStackTrace();
+           }
+       }
+    }//GEN-LAST:event_enviarPedidoActionPerformed
 
     private void quitarCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitarCantidadActionPerformed
         double x=0.0, ivaAct=0.0,subTotalAct=0.0,precioTotal=0.0;
@@ -566,8 +609,8 @@ public class TormarPedido extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel cambios;
     private javax.swing.JTextField cantidad;
     private javax.swing.JLabel diaPedido;
+    private javax.swing.JButton enviarPedido;
     private javax.swing.JLabel fecha;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;

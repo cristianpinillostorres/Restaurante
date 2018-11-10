@@ -8,6 +8,9 @@ package restauracion;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +23,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
+import javax.swing.DefaultListModel;
 /**
  *
  * @author familia pinillos
@@ -82,10 +88,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 System.out.print("Error cerrando archivo");
             }
         }
-    }
-    
-    
-    
+    } 
     public void buscarOcupadas(){
         String ruta = "Mesas/mesasOcupadas.txt"; 
         File archivo = null;  //apuntar al archivo almancenado DD
@@ -142,6 +145,45 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         }
     }
     
+    
+
+    
+    public void buscarPedidos(String mesa){
+        DefaultListModel modelo = new DefaultListModel();
+        modelo.addElement("Can    Plato");
+        String ruta = "Pedido/"+mesa+".txt"; 
+        File archivo = null;  //apuntar al archivo almancenado DD
+        FileReader contenido = null;  //acceder a todo el contenido del archivo
+        BufferedReader linea = null; //accede linea a linea al contenido
+         
+        try{
+            archivo = new File(ruta);
+            contenido = new FileReader(archivo);
+            linea = new BufferedReader(contenido);
+            
+            String cadena=""; //variable captura los datos del archivo
+            while((cadena=linea.readLine()) != null){ //recorre todo el archivo
+                String dato[] = cadena.split(";");
+                String lista = dato[1]+"   "+dato[0];
+                modelo.addElement(lista);
+
+            }
+         }catch(IOException e){
+           System.out.print("Error creando archivo");
+        }
+        finally{
+            try{
+                if(contenido != null){
+                    contenido.close();
+                }
+            }catch(IOException e1){
+                System.out.print("Error cerrando archivo");
+            }
+        }
+        pedidos.setModel(modelo);
+    } 
+        
+     
      public void verMatriz(){
         
         int l = 0;
@@ -190,7 +232,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 
                 //este es el evento 
                 Controlar bt = new Controlar();
+                Control boton = new Control();
                 cuadro[i][j].addActionListener(bt);
+                cuadro[i][j].addMouseListener(boton);
                 panelMesas.add(cuadro[i][j]);                
                 id ++;
                 x+=l+aum; // ubicacion en el panell no cambiar  
@@ -228,7 +272,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 cuadroAux[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
                 //este es el evento 
                 Controlar bt = new Controlar();
+                Control boton = new Control();
                 cuadroAux[i][j].addActionListener(bt);
+                cuadroAux[i][j].addMouseListener(boton);
                 panelAux.add(cuadroAux[i][j]);             
                 id ++;
                 
@@ -250,54 +296,73 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         }   
         
         }  
-        
+        System.out.print(cuadro[1][0].getBackground()+"+++");
+        System.out.print(cuadro[1][1].getBackground()+"---");
     }
     
     private class Controlar implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            //String sillas ="";
-            //String s;
-                for (int i = 0 ;  i<filas ; i++){
-                    for (int j = 0 ;  j<columnas ; j++){   
-                        
-                        if(e.getSource().equals(cuadro[i][j])){ // si le da click al boton : 
-                            cuadro[i][j].setBackground(new Color(255,51,51));
-                            cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
-                            estado = true;
-                            String s = (cuadro[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...
-                            
-                            guardarMesa(s);
-                            
-                            Mesero ventana1 =  new Mesero(cuadro[i][j].getName());
-                            ventana1.setVisible(true);
-                        }   
+            for (int i = 0 ;  i<filas ; i++){
+                for (int j = 0 ;  j<columnas ; j++){                
+                    if(e.getSource().equals(cuadro[i][j])){ // si le da click al boton : 
+                        cuadro[i][j].setBackground(new Color(255,51,51));
+                        cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
+                        estado = true;
+                        String s = (cuadro[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...                        
+                        guardarMesa(s);    
+                        Mesero ventana1 =  new Mesero(cuadro[i][j].getName());
+                        ventana1.setVisible(true);                        
                     }   
-                 }
-                //int f = aux ;
-                //int c = 1 ;
-                
-               for (int i = 0 ;  i<fil ; i++){
-                    for (int j = 0 ;  j<col ; j++){     
-                        if(e.getSource().equals(cuadroAux[i][j])){
-                              
-                            cuadroAux[i][j].setBackground(new Color(255,51,51));
-                            cuadroAux[i][j].setForeground(Color.white); 
-                            estado = true ; 
-                            String si = (cuadroAux[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...
-                            
-                            guardarMesa(si);
-                            Mesero ventana1 =  new Mesero(cuadroAux[i][j].getName());
-                            ventana1.setVisible(true);
-                            
-                            
-                        }   
+                }   
+            }
+            for (int i = 0 ;  i<fil ; i++){
+                for (int j = 0 ;  j<col ; j++){     
+                    if(e.getSource().equals(cuadroAux[i][j])){     
+                        cuadroAux[i][j].setBackground(new Color(255,51,51));
+                        cuadroAux[i][j].setForeground(Color.white); 
+                        estado = true ; 
+                        String si = (cuadroAux[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...    
+                        guardarMesa(si);
+                        Mesero ventana1 =  new Mesero(cuadroAux[i][j].getName());
+                        ventana1.setVisible(true);    
                     }   
-                 }    
+                }   
+            }    
         }
+    }
+    private class Control implements MouseListener{
+        @Override
+        public void mouseEntered(MouseEvent evt) {
+            Color color = new Color(255,51,51);
+            for(int i = 0 ;  i<filas ; i++){
+                for (int j = 0 ;  j<columnas ; j++){ 
+                    if(cuadro[i][j].getBackground()==color){
+                        String nombre = cuadro[i][j].getText(); 
+                        titulo.setText(nombre);
+                        String s = (cuadro[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ... 
+                        buscarPedidos(cuadro[i][j].getName());
+                    }
+                }   
+            }
+            for (int i = 0 ;  i<fil ; i++){
+                for (int j = 0 ;  j<col ; j++){                         
+                }   
+            } 
+            
+        }      
+        public void mouseReleased(MouseEvent arg0){}
+        @Override
+        public void mousePressed(MouseEvent arg0){}
+        @Override
+        public void mouseExited(MouseEvent arg0){}
+        @Override
+        public void mouseClicked(MouseEvent arg0){}
+    }
+       
        
         
-    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -316,6 +381,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pedidos = new javax.swing.JList<>();
+        titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -436,15 +504,33 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jPanel6.setBackground(new java.awt.Color(192, 208, 224));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, null));
 
+        pedidos.setBackground(new java.awt.Color(192, 208, 224));
+        jScrollPane1.setViewportView(pedidos);
+
+        titulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 320, 520));
@@ -478,9 +564,12 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbHora;
     private javax.swing.JPanel panelAux;
     private javax.swing.JPanel panelMesas;
+    private javax.swing.JList<String> pedidos;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
     @Override
     public void run() {
