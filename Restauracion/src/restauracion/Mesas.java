@@ -105,8 +105,9 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 
                 String mesa = dato[0];
                 String estad= dato[1];
-                ocupadas.add(new String[]{mesa, estad}); // Guardar la posicion de la primera letra en el arrayList 
-
+                String hor = dato[2];
+                ocupadas.add(new String[]{mesa, estad,hor}); // Guardar la posicion de la primera letra en el arrayList 
+                
             }
          }catch(IOException e){
            System.out.print("Error creando archivo");
@@ -123,7 +124,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
     }
     
     public void guardarMesa(String cadena){ 
-       
+        
         String ruta = "Mesas/mesasOcupadas.txt";
         FileWriter fichero = null;  //objeto principal (archivo)
         PrintWriter linea = null;   //objeto de contenido de archivo
@@ -146,7 +147,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
     
     public void buscarPedidos(String mesa){
         DefaultListModel modelo = new DefaultListModel();
-        String ruta = "Pedidos/pedido"+mesa+".txt"; 
+        String ruta = "Pedidos/pedido"+mesa+".txt";
         File archivo = null;  //apuntar al archivo almancenado DD
         FileReader contenido = null;  //acceder a todo el contenido del archivo
         BufferedReader linea = null; //accede linea a linea al contenido
@@ -161,9 +162,10 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 String dato[] = cadena.split(";");
                 String lista = "  "+dato[1]+"           "+dato[0];
                 modelo.addElement(lista);
-
+                
             }
-        }catch(IOException e){}
+        }catch(IOException e){
+        }
         finally{
             try{
                 if(contenido != null){
@@ -272,6 +274,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 
                 for (int t = 0 ; t < ocupadas.size() ; t ++){
                      if ((ocupadas.get(t)[0]) == null ? cuadroAux[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadroAux[i][j].getName())){
+                         
                     cuadroAux[i][j].setBackground(new Color(255,51,51));
                     cuadroAux[i][j].setForeground(Color.white);  // pone el color de letra blanco ...
                     cuadroAux[i][j].setFont(new java.awt.Font("Tahoma", 1, tam)); 
@@ -287,8 +290,6 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         }   
         
         }  
-        System.out.print(cuadro[1][0].getBackground()+"+++");
-        System.out.print(cuadro[1][1].getBackground()+"---");
     }
     
     private class Controlar implements ActionListener{
@@ -300,10 +301,11 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                         cuadro[i][j].setBackground(new Color(255,51,51));
                         cuadro[i][j].setForeground(Color.white);  // pone el color de letra balnco ...
                         estado = true;
-                        String s = (cuadro[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...                        
+                        String s = (cuadro[i][j].getName())+";"+estado+";"+lbHora.getText()+";"; // guarda el nombre del boton o ( el numero de mesa) ...                        
                         guardarMesa(s);    
                         Mesero ventana1 =  new Mesero(cuadro[i][j].getName());
-                        ventana1.setVisible(true);                        
+                        ventana1.setVisible(true);
+                        dispose();
                     }   
                 }   
             }
@@ -313,7 +315,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                         cuadroAux[i][j].setBackground(new Color(255,51,51));
                         cuadroAux[i][j].setForeground(Color.white); 
                         estado = true ; 
-                        String si = (cuadroAux[i][j].getName())+";"+estado+";"; // guarda el nombre del boton o ( el numero de mesa) ...    
+                        String si = (cuadroAux[i][j].getName())+";"+estado+";"+lbHora.getText()+";"; // guarda el nombre del boton o ( el numero de mesa) ...    
                         guardarMesa(si);
                         Mesero ventana1 =  new Mesero(cuadroAux[i][j].getName());
                         ventana1.setVisible(true);    
@@ -326,19 +328,24 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         @Override
         public void mouseEntered(MouseEvent evt) {
             String nombre="";
+            String [] estado = new String [ocupadas.size()];
+            String [] horas = new String [ocupadas.size()];
             for(int i = 0 ;  i<filas ; i++){
                 for (int j = 0 ;  j<columnas ; j++){ 
                    if(evt.getSource().equals(cuadro[i][j])){ 
                         for (int t = 0 ; t < ocupadas.size() ; t ++){
-                            if ((ocupadas.get(t)[0]) == null ? cuadro[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadro[i][j].getName())){
-                            nombre = cuadro[i][j].getText(); 
-                            titulo.setText(nombre);
-                            buscarPedidos(cuadro[i][j].getName());
-                            }else {
-                                nombre = cuadro[i][j].getText();
+                            estado[t] = ocupadas.get(t)[0];
+                            horas[t]= ocupadas.get(t)[2];
+                            if (estado[t].equals(cuadro[i][j].getName())){
+                                
+                                nombre = cuadro[i][j].getText(); 
                                 titulo.setText(nombre);
-                                DefaultListModel modelo = new DefaultListModel(); 
-                                pedidos.setModel(modelo); 
+                                buscarPedidos(cuadro[i][j].getName());
+                                }else {
+                                    nombre = cuadro[i][j].getText();
+                                    titulo.setText(nombre);
+                                    buscarPedidos(cuadro[i][j].getName());
+                                    
                             }     
                         }
                     }   
@@ -348,15 +355,20 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 for (int j = 0 ;  j<col ; j++){
                     if(evt.getSource().equals(cuadroAux[i][j])){ 
                         for (int t = 0 ; t < ocupadas.size() ; t ++){
-                            if ((ocupadas.get(t)[0]) == null ? cuadroAux[i][j].getName() == null : (ocupadas.get(t)[0]).equals(cuadroAux[i][j].getName())){
-                            nombre = cuadroAux[i][j].getText(); 
-                            titulo.setText(nombre);
-                            buscarPedidos(cuadroAux[i][j].getName());
-                            }else {
-                                nombre = cuadroAux[i][j].getText();
+                            estado[t] = ocupadas.get(t)[0];
+                            horas[t]= ocupadas.get(t)[2];
+                            if (estado[t].equals(cuadro[i][j].getName())){
+                                pedidos.setVisible(true);
+                                nombre = cuadroAux[i][j].getText(); 
                                 titulo.setText(nombre);
-                                DefaultListModel modelo = new DefaultListModel(); 
-                                pedidos.setModel(modelo); 
+                                buscarPedidos(cuadroAux[i][j].getName());
+                                }else {
+                                    nombre = cuadroAux[i][j].getText();
+                                    titulo.setText(nombre);
+                                    buscarPedidos(cuadroAux[i][j].getName());
+                                   
+                                    
+                                 
                             }     
                         }
                     }
@@ -395,9 +407,10 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        titulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pedidos = new javax.swing.JList<>();
-        titulo = new javax.swing.JLabel();
+        horalabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -518,24 +531,28 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jPanel6.setBackground(new java.awt.Color(192, 208, 224));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, null));
 
+        titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+
         pedidos.setBackground(new java.awt.Color(192, 208, 224));
         jScrollPane1.setViewportView(pedidos);
 
-        titulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        horalabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(86, 86, 86))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(horalabel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -543,8 +560,10 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(horalabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 320, 520));
@@ -568,6 +587,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fecha;
+    private javax.swing.JLabel horalabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
