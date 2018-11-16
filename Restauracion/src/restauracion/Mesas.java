@@ -188,28 +188,36 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         int ai = 0 ;
         int ax = 0 ;
         int tam = 18 ;
-        if(numeroMesas == 10){ filas = 3; columnas =3; aux = 1; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 270;} 
-        if(numeroMesas == 11){ filas = 3; columnas =3; aux = 2; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 70;} 
-        if(numeroMesas == 12){ filas = 3; columnas =3; aux = 3; x =70 ; y =20 ; l =170 ; h =100 ; aum = 30 ; ai = 70; ay = 20; ax= 70;} 
-        if(numeroMesas == 13){ filas = 2; columnas =5; aux = 3; x =30 ; y =80 ; l =120 ; h =120 ; aum = 20 ; ai = 30; ay = 0; ax= 30;} 
-        if(numeroMesas == 14){ filas = 3; columnas =4; aux = 2; x =15; y =15 ; l =150 ; h =100 ; aum = 26 ; ai = 15; ay = 5; ax= 15; tam = 15;} 
-        if(numeroMesas == 15){ filas = 3; columnas =4; aux = 3; x =15; y =15 ; l =150 ; h =100 ; aum = 26 ; ai = 15; ay = 5; ax= 15; tam = 15;}
-        if(numeroMesas == 16){ filas = 3; columnas =4; aux = 4; x =15; y =15 ; l =150 ; h =100 ; aum = 26 ; ai = 15; ay = 5; ax= 15; tam = 15;}
-        if(numeroMesas == 17){ filas = 3; columnas =5; aux = 2; x =15; y =15 ; l =120 ; h =100 ; aum = 22 ; ai = 15; ay = 5; ax= 15; tam = 15;}
-        if(numeroMesas == 18){ filas = 3; columnas =5; aux = 3; x =15; y =15 ; l =120 ; h =100 ; aum = 22 ; ai = 15; ay = 5; ax= 15; tam = 15;} 
-        if(numeroMesas == 19){ filas = 3; columnas =5; aux = 4; x =15; y =15 ; l =120 ; h =100 ; aum = 22 ; ai = 15; ay = 5; ax= 15; tam = 15;}   
-        if(numeroMesas == 20){ filas = 3; columnas =5; aux = 5; x =15; y =15 ; l =120 ; h =100 ; aum = 22 ; ai = 15; ay = 5; ax= 15; tam = 15;} 
-        if(numeroMesas == 21){ filas = 3; columnas =6; aux = 3; x =15; y =15 ; l =93 ; h =95 ; aum = 22 ; ai = 15; ay = 0; ax= 15; tam = 11;}  
-        if(numeroMesas == 22){ filas = 3; columnas =6; aux = 4; x =15; y =15 ; l =93 ; h =95 ; aum = 22 ; ai = 15; ay = 0; ax= 15; tam = 11;} 
-        if(numeroMesas == 23){ filas = 3; columnas =6; aux = 5; x =15; y =15 ; l =93 ; h =95 ; aum = 22 ; ai = 15; ay = 0; ax= 15; tam = 11;} 
-        if(numeroMesas == 24){ filas = 3; columnas =6; aux = 6; x =15; y =15 ; l =93 ; h =95 ; aum = 22 ; ai = 15; ay = 0; ax= 15; tam = 11;} 
-        if(numeroMesas == 25){ filas = 4; columnas =5; aux = 5; x =15; y =15 ; l =115 ; h =70 ; aum = 22 ; ai = 15; ay = 0; ax= 15; tam = 11;} 
-        if(numeroMesas == 26){ filas = 4; columnas =6; aux = 2; x =15; y =15 ; l =93 ; h =70 ; aum = 22 ; ai = 15; ay = 15; ax= 15; tam = 11;}  
-        if(numeroMesas == 27){ filas = 4; columnas =6; aux = 3; x =15; y =15 ; l =93 ; h =70 ; aum = 22 ; ai = 15; ay = 15; ax= 15; tam = 11;} 
-        if(numeroMesas == 28){ filas = 4; columnas =6; aux = 4; x =15; y =15 ; l =93 ; h =70 ; aum = 22 ; ai = 15; ay = 15; ax= 15; tam = 11;} 
-        if(numeroMesas == 29){ filas = 4; columnas =6; aux = 5; x =15; y =15 ; l =93 ; h =70 ; aum = 22 ; ai = 15; ay = 15; ax= 15; tam = 11;}  
-        if(numeroMesas == 30){ filas = 4; columnas =6; aux = 6; x =15; y =15 ; l =93 ; h =70 ; aum = 22 ; ai = 15; ay = 10; ax= 15; tam = 11;} 
-           
+        if(numeroMesas == 10){ filas = 3; columnas =3; aux = 1; x =100; y =35 ; l =250 ; h =135 ; aum = 30 ; ai = 100; ax= 380; }
+        if(numeroMesas == 11){ filas = 3; columnas =3; aux = 2; x =100; y =35 ; l =250 ; h =135 ; aum = 30 ; ai = 100; ax= 100; } 
+        if(numeroMesas == 12){ filas = 3; columnas =3; aux = 3; x =100; y =35 ; l =250 ; h =135 ; aum = 30 ; ai = 100; ax= 100; }
+        if(numeroMesas == 13){ filas = 2; columnas =5; aux = 3; x =30 ; y =80 ; l =120 ; h =120 ; aum = 20 ; ai = 30; ax= 30;} 
+        if(numeroMesas == 14){ filas = 3; columnas =4; aux = 2; x =75; y =25 ; l =200 ; h =135 ; aum = 30 ; ai = 75; ax= 75; } 
+        if(numeroMesas == 15){ filas = 3; columnas =4; aux = 3; x =75; y =25 ; l =200 ; h =135 ; aum = 30 ; ai = 75; ax= 75; }
+        if(numeroMesas == 16){ filas = 3; columnas =4; aux = 4; x =75; y =25 ; l =200 ; h =135 ; aum = 30 ; ai = 75; ax= 75; }
+        if(numeroMesas == 17){ filas = 3; columnas =5; aux = 2; x =20; y =25 ; l =170 ; h =135 ; aum = 30 ; ai = 20; ax= 20; }
+        if(numeroMesas == 18){ filas = 3; columnas =5; aux = 3; x =20; y =25 ; l =170 ; h =135 ; aum = 30 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 19){ filas = 3; columnas =5; aux = 4; x =20; y =25 ; l =170 ; h =135 ; aum = 30 ; ai = 20; ax= 20; }   
+        if(numeroMesas == 20){ filas = 3; columnas =5; aux = 5; x =20; y =25 ; l =170 ; h =135 ; aum = 30 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 21){ filas = 3; columnas =6; aux = 3; x =20; y =25 ; l =140 ; h =135 ; aum = 30 ; ai = 20; ax= 20; }  
+        if(numeroMesas == 22){ filas = 3; columnas =6; aux = 4; x =20; y =25 ; l =140 ; h =135 ; aum = 30 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 23){ filas = 3; columnas =6; aux = 5; x =20; y =25 ; l =140 ; h =135 ; aum = 30 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 24){ filas = 3; columnas =6; aux = 6; x =20; y =25 ; l =140 ; h =135 ; aum = 30 ; ai = 20; ax= 20; }
+        if(numeroMesas == 25){ filas = 4; columnas =5; aux = 5; x =25; y =15 ; l =160 ; h =110 ; aum = 20 ; ai = 25; ax= 25; }
+        if(numeroMesas == 26){ filas = 4; columnas =6; aux = 2; x =15; y =15 ; l =150 ; h =110 ; aum = 20 ; ai = 15; ax= 15; }
+        if(numeroMesas == 27){ filas = 4; columnas =6; aux = 3; x =15; y =15 ; l =150 ; h =110 ; aum = 20 ; ai = 15; ax= 15; }
+        if(numeroMesas == 28){ filas = 4; columnas =6; aux = 4; x =15; y =15 ; l =150 ; h =110 ; aum = 20 ; ai = 15; ax= 15; }
+        if(numeroMesas == 29){ filas = 4; columnas =6; aux = 5; x =15; y =15 ; l =150 ; h =110 ; aum = 20 ; ai = 15; ax= 15; } 
+        if(numeroMesas == 30){ filas = 4; columnas =6; aux = 6; x =15; y =15 ; l =150 ; h =110 ; aum = 20 ; ai = 15; ax= 15; }
+        if(numeroMesas == 31){ filas = 4; columnas =7; aux = 3; x =20; y =15 ; l =120 ; h =110 ; aum = 20 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 32){ filas = 4; columnas =7; aux = 4; x =20; y =15 ; l =125 ; h =110 ; aum = 20 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 33){ filas = 4; columnas =7; aux = 5; x =20; y =15 ; l =125 ; h =110 ; aum = 20 ; ai = 20; ax= 20; } 
+        if(numeroMesas == 34){ filas = 4; columnas =7; aux = 6; x =20; y =15 ; l =125 ; h =110 ; aum = 20 ; ai = 20; ax= 20; }  
+        if(numeroMesas == 35){ filas = 4; columnas =7; aux = 7; x =20; y =15 ; l =125 ; h =110 ; aum = 20 ; ai = 20; ax= 20; }  
+        if(numeroMesas == 36){ filas = 4; columnas =8; aux = 4; x =15; y =25 ; l =110 ; h =110 ; aum = 16 ; ai = 15; ax= 15; }  
+        if(numeroMesas == 38){ filas = 4; columnas =8; aux = 6; x =15; y =25 ; l =110 ; h =110 ; aum = 16 ; ai = 15; ax= 15; }  
+        if(numeroMesas == 39){ filas = 4; columnas =8; aux = 7; x =15; y =25 ; l =110 ; h =110 ; aum = 16 ; ai = 15; ax= 15; }  
+        if(numeroMesas == 40){ filas = 4; columnas =8; aux = 8; x =15; y =25 ; l =110 ; h =110 ; aum = 16 ; ai = 15; ax= 15; } 
         //termina de validar las sillas y columnas 
         cuadro = new JButton[filas][columnas];
     
@@ -396,12 +404,10 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jPanel2 = new javax.swing.JPanel();
         panelMesas = new javax.swing.JPanel();
         panelAux = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbHora = new javax.swing.JLabel();
         fecha = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -410,7 +416,6 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         titulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pedidos = new javax.swing.JList<>();
-        horalabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -427,14 +432,14 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         panelMesas.setLayout(panelMesasLayout);
         panelMesasLayout.setHorizontalGroup(
             panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, 1030, Short.MAX_VALUE)
         );
         panelMesasLayout.setVerticalGroup(
             panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
-        jPanel2.add(panelMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 710, 380));
+        jPanel2.add(panelMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 1030, 540));
 
         panelAux.setBackground(new java.awt.Color(210, 223, 236));
         panelAux.setPreferredSize(new java.awt.Dimension(200, 350));
@@ -443,17 +448,14 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         panelAux.setLayout(panelAuxLayout);
         panelAuxLayout.setHorizontalGroup(
             panelAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, 1030, Short.MAX_VALUE)
         );
         panelAuxLayout.setVerticalGroup(
             panelAuxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
+            .addGap(0, 150, Short.MAX_VALUE)
         );
 
-        jPanel2.add(panelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 710, 140));
-
-        jLabel4.setText("jLabel4");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 30, -1, -1));
+        jPanel2.add(panelAux, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 1030, 150));
 
         jPanel1.setBackground(new java.awt.Color(6, 77, 175));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -461,32 +463,17 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 32)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Mesas del restaurante");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 29, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 50));
 
         lbHora.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lbHora.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, 116, 27));
+        jPanel1.add(lbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 10, 116, 27));
 
         fecha.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         fecha.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 320, 29));
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, 340, 30));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 90));
-
-        jPanel3.setBackground(new java.awt.Color(6, 77, 175));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1110, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 710, 1110, 50));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1430, 50));
 
         jPanel4.setBackground(new java.awt.Color(114, 216, 114));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -502,7 +489,7 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
             .addGap(0, 18, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 650, 30, 20));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 770, 30, 20));
 
         jPanel5.setBackground(new java.awt.Color(255, 51, 51));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -518,15 +505,15 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 650, -1, -1));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 770, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("No Disponible");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 650, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 770, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Disponible");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 650, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 770, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(192, 208, 224));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.gray, null));
@@ -536,49 +523,38 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
         pedidos.setBackground(new java.awt.Color(192, 208, 224));
         jScrollPane1.setViewportView(pedidos);
 
-        horalabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(horalabel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30))))
+                    .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(horalabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 320, 520));
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 120, 330, 550));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1107, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1435, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -587,14 +563,11 @@ public final class Mesas extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel fecha;
-    private javax.swing.JLabel horalabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
