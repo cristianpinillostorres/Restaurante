@@ -6,6 +6,7 @@
 package restauracion;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -20,6 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 /**
  *
  * @author familia pinillos
@@ -27,6 +29,7 @@ import javax.swing.JLabel;
 public class Mesero extends javax.swing.JFrame implements Runnable {
     JButton[] cuadro;
     JLabel[] letra;
+    JPanel panelMesas = new JPanel();
     String hora, minutos, segundos, ampm;
     Thread h1;
     String nombre , rutaImagen ; 
@@ -34,9 +37,7 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
     private int id = 1 ;
     
     List<String[]> posiciones = new ArrayList<>(); 
-
-    
-        
+     
     public Mesero(String Mesa) {
         initComponents();
         listarMeseros();
@@ -50,24 +51,21 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         String ruta = "Meseros/meseros.txt"; 
         File archivo = null;  //apuntar al archivo almancenado DD
         FileReader contenido = null;  //acceder a todo el contenido del archivo
-        BufferedReader linea = null; //accede linea a linea al contenido
-         
+        BufferedReader linea = null; //accede linea a linea al contenido     
         try{
             archivo = new File(ruta);
             contenido = new FileReader(archivo);
             linea = new BufferedReader(contenido);
-            
             String cadena=""; //variable captura los datos del archivo
             while((cadena=linea.readLine()) != null){ //recorre todo el archivo
-                
-                
                 String dato[] = cadena.split(";");
-                
                 nombre= dato[1];
                 rutaImagen = dato[2];
-                posiciones.add(new String[]{nombre , rutaImagen}); // Guardar la posicion de la primera letra en el arrayList
+                posiciones.add(new String[]{nombre , rutaImagen}); 
+               /* 
+                este array list guarda el nombre del mesero[0] y la ruta imagen[1]
+                */
                 contador++ ; 
-
             }
             cont.setText(String.valueOf(contador));
          }catch(IOException e){
@@ -84,21 +82,22 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         }
     }   
     
-    
-     public void verMatriz(){
+    public void verMatriz(){
         int x = 25 ;  
         int y = 25 ; 
-        int aum = 180 ;
-        
+        int aum = 180 ;   
         int a = 25 ; 
         int b =180 ;
-        int avan = 180;
-           
+        int avan = 180; 
         //termina de validar las sillas y columnas 
         cuadro = new JButton[contador];
         letra = new JLabel[contador];
         
-        
+        int tamaño = 180 * contador ; 
+        panelMesas.setBackground(new Color (231,224,224));
+        panelMesas.setPreferredSize(new Dimension(tamaño,390));
+        panelMesas.setLayout(null);
+        jScrollPane1.setViewportView(panelMesas);
         for (int i = 0 ;  i<contador ; i++){
            
                 cuadro[i]= new JButton();
@@ -109,10 +108,7 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
                 cuadro[i].setBorderPainted(true);
                 cuadro[i].setBounds(x,y,150,150);   
                 letra[i].setBounds(a,b,150,26); 
- 
-
                 letra[i].setText(posiciones.get(i)[0]); 
-                
                 
                 cuadro[i].setName("Mesero "+id);
                 letra[i].setName(""+id); 
@@ -122,9 +118,9 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
                 //este es el evento 
                 Controlar bt = new Controlar();
                 cuadro[i].addActionListener(bt);
+                
                 panelMesas.add(cuadro[i]);
                 panelMesas.add(letra[i]);
-                
                 
                 id ++;
                 x+=aum; // ubicacion en el panell no cambiar    
@@ -139,8 +135,6 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
     private class Controlar implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            //String sillas ="";
-            //String s;
                 for (int i = 0 ;  i<contador ; i++){
                         if(e.getSource().equals(cuadro[i])){ // si le da click al boton : 
                            
@@ -150,28 +144,26 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
                                                  
                         }   
                     }                
-        }
-       
-        
+        }     
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        panelMesas = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         mesaAtender2 = new javax.swing.JLabel();
         mesaAtender = new javax.swing.JLabel();
+        cont = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         fecha = new javax.swing.JLabel();
         lbHora = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         mesaAtender1 = new javax.swing.JLabel();
-        cont = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(810, 609));
@@ -182,21 +174,6 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 51, 51), 6));
         jPanel2.setPreferredSize(new java.awt.Dimension(770, 680));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        panelMesas.setBackground(new java.awt.Color(231, 224, 224));
-
-        javax.swing.GroupLayout panelMesasLayout = new javax.swing.GroupLayout(panelMesas);
-        panelMesas.setLayout(panelMesasLayout);
-        panelMesasLayout.setHorizontalGroup(
-            panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 760, Short.MAX_VALUE)
-        );
-        panelMesasLayout.setVerticalGroup(
-            panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(panelMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 760, 410));
 
         jLabel4.setText("jLabel4");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 30, -1, -1));
@@ -212,7 +189,7 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Mesa :");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 30, -1, -1));
 
         mesaAtender2.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         mesaAtender2.setForeground(new java.awt.Color(255, 255, 255));
@@ -221,7 +198,11 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
 
         mesaAtender.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         mesaAtender.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(mesaAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 80, 30));
+        jPanel1.add(mesaAtender, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, 80, 30));
+
+        cont.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cont.setForeground(new java.awt.Color(255, 51, 51));
+        jPanel1.add(cont, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, 100, 30));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 80));
 
@@ -230,7 +211,7 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
 
         fecha.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         fecha.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, 330, 29));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 380, 29));
 
         lbHora.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         lbHora.setForeground(new java.awt.Color(255, 255, 255));
@@ -254,8 +235,8 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         mesaAtender1.setText("20");
         jPanel2.add(mesaAtender1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 40, 80, 30));
 
-        cont.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel2.add(cont, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 130, 100, 30));
+        jScrollPane1.setBorder(null);
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 740, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -288,11 +269,11 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbHora;
     private javax.swing.JLabel mesaAtender;
     private javax.swing.JLabel mesaAtender1;
     private javax.swing.JLabel mesaAtender2;
-    private javax.swing.JPanel panelMesas;
     // End of variables declaration//GEN-END:variables
     @Override
     public void run() {
@@ -325,8 +306,4 @@ public class Mesero extends javax.swing.JFrame implements Runnable {
         minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
         segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND) : "0" + calendario.get(Calendar.SECOND);
     }
-
-
-
-
 }
