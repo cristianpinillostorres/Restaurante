@@ -1458,10 +1458,10 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
     private void cambiarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarMesasActionPerformed
         int num  = Integer.parseInt(numeroMesas.getText()); 
-        if(num <10){
-            mensaje("El numero De Mesas No Puede Ser Menor A 10");
+        if((num<10)&&(num>41)){
+            mensaje("El numero De Mesas No Puede Ser Menor A 10 o Mayor a 40");
         }else{
-            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de modificar el numero de mesas?/n Al hacerlo se perderan los pedidos actuales ","Si/No",0);
+            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de modificar el numero de mesas? Al hacerlo se perderan los pedidos actuales ","Si/No",0);
             if(confir  == 0){  
                 numeroMesas();
                 eliminarPedidos();
