@@ -17,6 +17,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 /**
  *
  * @author familia pinillos
@@ -113,12 +115,12 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         
         String dia = diaSel.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
-        tabla.addColumn("codigo");
+        tabla.addColumn("Cod");
         tabla.addColumn("Plato");
-        tabla.addColumn("Descripcion ");
-        tabla.addColumn("tipo");
-        tabla.addColumn("Precio ");
-       
+        tabla.addColumn("Descripcion");
+        tabla.addColumn("Tipo");
+        tabla.addColumn("Precio"); 
+
         Object fila[] = new Object[tabla.getColumnCount()];
         
         File archivo = null;  //apuntar al archivo almancenado DD
@@ -158,9 +160,59 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         }
         verPlatos.setModel(tabla);
         verPlatos.setRowHeight(20);
-        
+        TableColumn columna1 = verPlatos.getColumn("Cod");
+        columna1.setPreferredWidth(25);
+        TableColumn columna2 = verPlatos.getColumn("Plato");
+        columna2.setPreferredWidth(145);
+        TableColumn columna3 = verPlatos.getColumn("Descripcion");
+        columna3.setPreferredWidth(364);
+        TableColumn columna4 = verPlatos.getColumn("Tipo");
+        columna4.setPreferredWidth(85);
+        TableColumn columna5 = verPlatos.getColumn("Precio");
+        columna5.setPreferredWidth(35);
     } 
-  
+
+     public void modificar(String cod , String lineaModificar){
+        String dia = diaSel.getText();
+        String ruta = "Menu/Dias/"+dia+".txt";
+        try{
+            File archivo = new File(ruta);
+            File archivoTemporal = new File(archivo.getAbsolutePath() + ".tmp");//crea el archivo temporal
+            
+            BufferedReader linea  = new BufferedReader(new FileReader(archivo));
+            PrintWriter escribir  = new PrintWriter(new FileWriter(archivoTemporal));
+            
+            String cadena= null; //variable captura los datos del archivo
+            while((cadena=linea.readLine()) != null){ //recorre todo el archivo
+                String dato[] = cadena.split(";");
+                if (dato[1].equals(cod)) {
+                       /*Escribo la nueva linea en vez de la que tenia*/
+                        escribir.println(lineaModificar);
+                        escribir.flush();
+                    }else{
+                        /*Escribo la linea antigua*/
+                        escribir.println(cadena);
+                        escribir.flush();
+                    }
+            }
+            escribir.close();
+            linea.close();
+            //elimiona el archivo original 
+            if (!archivo.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            //remplaza el nombre del archivo temporal con el nombre que tenia el archivo original 
+            if (!archivoTemporal.renameTo(archivo)){
+                System.out.println("Could not rename file");
+            }
+            }catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+            }catch (IOException ex) {
+                   ex.printStackTrace();
+            }
+    }
+    
     public void eliminar(String lineaBorrar){
         String dia = diaAgregar.getText();
         String ruta = "Menu/Dias/"+dia+".txt";
@@ -457,6 +509,46 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                    ex.printStackTrace();
             }
     }
+    
+    public void modificarMeseros(String cod , String lineaModificar){
+        String ruta = "Meseros/meseros.txt";
+        try{
+            File archivo = new File(ruta);
+            File archivoTemporal = new File(archivo.getAbsolutePath() + ".tmp");//crea el archivo temporal
+            
+            BufferedReader linea  = new BufferedReader(new FileReader(archivo));
+            PrintWriter escribir  = new PrintWriter(new FileWriter(archivoTemporal));
+            
+            String cadena= null; //variable captura los datos del archivo
+            while((cadena=linea.readLine()) != null){ //recorre todo el archivo
+                String dato[] = cadena.split(";");
+                if (dato[0].equals(cod)) {
+                       /*Escribo la nueva linea en vez de la que tenia*/
+                        escribir.println(lineaModificar);
+                        escribir.flush();
+                    }else{
+                        /*Escribo la linea antigua*/
+                        escribir.println(cadena);
+                        escribir.flush();
+                    }
+            }
+            escribir.close();
+            linea.close();
+            //elimiona el archivo original 
+            if (!archivo.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+            //remplaza el nombre del archivo temporal con el nombre que tenia el archivo original 
+            if (!archivoTemporal.renameTo(archivo)){
+                System.out.println("Could not rename file");
+            }
+            }catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+            }catch (IOException ex) {
+                   ex.printStackTrace();
+            }
+    }
 // ---------------------------------------------------------------------------
     public void listarMesas(){
         String ruta = "Mesas/mesas.txt";
@@ -530,6 +622,66 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 }
             }
     }
+    public void eliminarMesas(){
+        String dia = diaAgregar.getText();
+        String ruta = "Mesas/mesasOcupadas.txt";
+        File archivo = new File(ruta);
+        File archivoTemporal = new File(archivo.getName() + ".tmp");//crea el archivo temporal   
+
+        try{
+            if(archivo.exists()){
+                    // Capturo el nombre del fichero antiguo
+                    String nArchivo = archivo.getName();
+                    // Borro el fichero antiguo
+                    archivo.delete();
+                    //Renombro el fichero auxiliar con el nombre del fichero antiguo
+                    archivoTemporal.renameTo(archivo);
+            }else{
+               System.out.println("Fichero no Existe");
+            }
+
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+    }
+    public void eliminarPedidos(){
+      /*  String dia = diaAgregar.getText();
+        String ruta = "Mesas/mesasOcupadas.txt";
+        File archivo = new File(ruta);
+        File archivoTemporal = new File(archivo.getName() + ".tmp");//crea el archivo temporal   
+            */
+            String sourcePath = "Pedidos"; 
+            File prueba= new File(sourcePath); 
+            File[] ficheros =prueba.listFiles(); 
+            File f=null; 
+            if(prueba.exists()) { 
+                for (int x=0;x<ficheros.length;x++){ 
+                    f= new File(ficheros[x].toString()); 
+                    f.delete(); 
+                } 
+            }else{ 
+                System.out.println("No existe el directorio"); 
+            }
+        
+      /*  try{
+            if(archivo.exists()){
+                    // Capturo el nombre del fichero antiguo
+                    String nArchivo = archivo.getName();
+                    // Borro el fichero antiguo
+                    archivo.delete();
+                    //Renombro el fichero auxiliar con el nombre del fichero antiguo
+                    archivoTemporal.renameTo(archivo);
+            }else{
+               System.out.println("Fichero no Existe");
+            }
+
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }*/
+    }
+    
     //otros metodos
     private void mensaje(String texto){
         JOptionPane.showMessageDialog(null, texto);
@@ -539,6 +691,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         nombrePlato.setText("");
         desPlato.setText("");
         precioPlato.setText("");
+        tipos.setSelectedItem(0);
     } 
     public void limpiarCamposMeseros(){
  
@@ -591,6 +744,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         eliminarTodosPlatos = new javax.swing.JButton();
         diaSel = new javax.swing.JLabel();
         diaSel1 = new javax.swing.JLabel();
+        modificarPlato = new javax.swing.JButton();
         panelTiposMenu = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         nombreTipo = new javax.swing.JTextField();
@@ -618,7 +772,9 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         rutaImagen = new javax.swing.JTextField();
         seleccionaImagen = new javax.swing.JButton();
         registrarMesero = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         imagen = new javax.swing.JLabel();
+        eliminarMesero1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -639,7 +795,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         jTextField2.setText("jTextField2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrador");
         setAutoRequestFocus(false);
         setFocusCycleRoot(false);
@@ -661,11 +817,11 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         jLabel3.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         jLabel3.setText("CONFIGURACION DEL MENÚ");
-        panelMenus.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
+        panelMenus.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("______________________________________________________________");
-        panelMenus.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 480, 20));
+        panelMenus.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 480, 20));
 
         panelAuxM.setBackground(new java.awt.Color(201, 233, 201));
         panelAuxM.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -699,7 +855,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 guardarActionPerformed(evt);
             }
         });
-        panelAuxM.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, 130, 40));
+        panelAuxM.add(guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 130, 40));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel16.setText("Codigo del plato:");
@@ -722,14 +878,14 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         limpiarCamposMenu.setBackground(new java.awt.Color(9, 88, 59));
         limpiarCamposMenu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         limpiarCamposMenu.setForeground(new java.awt.Color(255, 255, 255));
-        limpiarCamposMenu.setText("Limpiar Campos");
+        limpiarCamposMenu.setText("Limpiar");
         limpiarCamposMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         limpiarCamposMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 limpiarCamposMenuActionPerformed(evt);
             }
         });
-        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 140, 40));
+        panelAuxM.add(limpiarCamposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 80, 40));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setText("Tipo de plato:");
@@ -737,7 +893,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         panelAuxM.add(labelTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 130, 20));
 
         semana.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        semana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un dia:", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", " " }));
+        semana.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un dia:", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
         semana.setOpaque(false);
         semana.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -750,7 +906,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         jLabel19.setText("Seleccione un dia para agregar menú:");
         panelAuxM.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 560, 290));
+        panelMenus.add(panelAuxM, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 550, 290));
 
         panelVerMenus.setBackground(new java.awt.Color(201, 233, 201));
         panelVerMenus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -764,7 +920,10 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
             }
         ));
+        verPlatos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        verPlatos.setAutoscrolls(false);
         verPlatos.setGridColor(new java.awt.Color(204, 204, 204));
+        verPlatos.setRowHeight(18);
         verPlatos.setSelectionBackground(new java.awt.Color(69, 157, 113));
         verPlatos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -807,30 +966,43 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         diaSel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         diaSel1.setText("Menu del dia:");
 
+        modificarPlato.setBackground(new java.awt.Color(9, 88, 59));
+        modificarPlato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        modificarPlato.setForeground(new java.awt.Color(255, 255, 255));
+        modificarPlato.setText("Modicar");
+        modificarPlato.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        modificarPlato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarPlatoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelVerMenusLayout = new javax.swing.GroupLayout(panelVerMenus);
         panelVerMenus.setLayout(panelVerMenusLayout);
         panelVerMenusLayout.setHorizontalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(diaSel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158))
             .addGroup(panelVerMenusLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVerMenusLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(modificarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20))
                     .addGroup(panelVerMenusLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 658, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(panelVerMenusLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(diaSel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(panelVerMenusLayout.createSequentialGroup()
+                .addGap(238, 238, 238)
+                .addComponent(diaSel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 274, Short.MAX_VALUE))
         );
         panelVerMenusLayout.setVerticalGroup(
             panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -844,11 +1016,12 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 .addGap(29, 29, 29)
                 .addGroup(panelVerMenusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(eliminarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eliminarTodosPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modificarPlato, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
-        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 500, 540));
+        panelMenus.add(panelVerMenus, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 80, 680, 540));
 
         panelTiposMenu.setBackground(new java.awt.Color(201, 233, 201));
         panelTiposMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -878,7 +1051,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         });
         jScrollPane3.setViewportView(listaTipos);
 
-        panelTiposMenu.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 160, 160));
+        panelTiposMenu.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 160, 160));
 
         agregarTipo.setBackground(new java.awt.Color(9, 88, 59));
         agregarTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -892,7 +1065,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         });
         panelTiposMenu.add(agregarTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 90, 30));
 
-        panelMenus.add(panelTiposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 560, 240));
+        panelMenus.add(panelTiposMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 550, 240));
 
         jTabbedPane1.addTab("Menu ", panelMenus);
         panelMenus.getAccessibleContext().setAccessibleName("");
@@ -924,7 +1097,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         });
         jScrollPane2.setViewportView(verMeseros);
 
-        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 310, 220));
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 430, 210));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel23.setText("________________________________________________");
@@ -933,13 +1106,13 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         eliminarMesero.setBackground(new java.awt.Color(9, 88, 59));
         eliminarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         eliminarMesero.setForeground(new java.awt.Color(255, 255, 255));
-        eliminarMesero.setText("Eliminar Mesero");
+        eliminarMesero.setText("Eliminar");
         eliminarMesero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarMeseroActionPerformed(evt);
             }
         });
-        jPanel4.add(eliminarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 130, 40));
+        jPanel4.add(eliminarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 90, 40));
 
         panelInsertamesero.setBackground(new java.awt.Color(172, 198, 172));
         panelInsertamesero.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1032,7 +1205,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel4.add(panelInsertamesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, -1, 220));
+        jPanel4.add(panelInsertamesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, 220));
 
         registrarMesero.setBackground(new java.awt.Color(9, 88, 59));
         registrarMesero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1043,10 +1216,41 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 registrarMeseroActionPerformed(evt);
             }
         });
-        jPanel4.add(registrarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 320, 150, 40));
-        jPanel4.add(imagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 150, 150));
+        jPanel4.add(registrarMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 150, 40));
 
-        panelMeseros.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 510, 610));
+        jPanel2.setBackground(new java.awt.Color(201, 233, 201));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
+        jPanel2.setPreferredSize(new java.awt.Dimension(151, 151));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 154, 154));
+
+        eliminarMesero1.setBackground(new java.awt.Color(9, 88, 59));
+        eliminarMesero1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        eliminarMesero1.setForeground(new java.awt.Color(255, 255, 255));
+        eliminarMesero1.setText("Modificar");
+        eliminarMesero1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarMesero1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(eliminarMesero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 100, 40));
+
+        panelMeseros.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, 610));
 
         jPanel6.setBackground(new java.awt.Color(201, 233, 201));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
@@ -1055,7 +1259,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         jLabel14.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel14.setText("ASIGNACION DE LAS MESAS");
-        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, -1));
+        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(201, 233, 201));
 
@@ -1115,11 +1319,11 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 .addGap(23, 23, 23))
         );
 
-        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 440, 130));
+        jPanel6.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 440, 130));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel26.setText("_________________________________________");
-        jPanel6.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 320, 20));
+        jPanel6.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 320, 20));
 
         panelInsetaMesas.setBackground(new java.awt.Color(172, 198, 172));
         panelInsetaMesas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -1162,9 +1366,9 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel6.add(panelInsetaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 480, 70));
+        jPanel6.add(panelInsetaMesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 480, 70));
 
-        panelMeseros.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 520, 610));
+        panelMeseros.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 600, 300));
 
         jTabbedPane1.addTab("Meseros y Mesas ", panelMeseros);
 
@@ -1172,7 +1376,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         panelMesas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jTabbedPane1.addTab("Informes y Contabilidad", panelMesas);
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1130, 680));
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1300, 680));
         jTabbedPane1.getAccessibleContext().setAccessibleName("Meseros y Menu ");
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 51));
@@ -1180,7 +1384,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         fecha.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         fecha.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 30, 330, 30));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 30, 370, 30));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1189,15 +1393,15 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
 
         lbHora.setFont(new java.awt.Font("Tahoma", 0, 19)); // NOI18N
         lbHora.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel3.add(lbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 30, 110, 30));
+        jPanel3.add(lbHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, 30, 110, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 70));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1225,14 +1429,19 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_semanaActionPerformed
 
     private void guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarActionPerformed
-        crearMenu();
-        listarPlatos();
-        limpiar();
+        int filaSel = tipos.getSelectedIndex();
+        if(filaSel==-1){
+                JOptionPane.showMessageDialog (null,"Debe seleccionar un tipo de comida","Advertecia",JOptionPane.WARNING_MESSAGE);
+            }else {
+                crearMenu();
+                listarPlatos();
+                limpiar();
+        }
     }//GEN-LAST:event_guardarActionPerformed
 
     private void verMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMesasActionPerformed
-        Mesas m;
-        m = new Mesas();
+        verMesas m;
+        m = new verMesas();
         m.setVisible(true);        
     }//GEN-LAST:event_verMesasActionPerformed
 
@@ -1248,15 +1457,17 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_cambiaMesasActionPerformed
 
     private void cambiarMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarMesasActionPerformed
-        
-        
-         int num  = Integer.parseInt(numeroMesas.getText()); 
-         if(num <10){
-            mensaje("ERROOR!!! El numero De Mesas No Puede Ser Menor A 10");
-       // panelInsetaMesas.setVisible(false);
+        int num  = Integer.parseInt(numeroMesas.getText()); 
+        if(num <10){
+            mensaje("El numero De Mesas No Puede Ser Menor A 10");
         }else{
-             numeroMesas();
-           panelInsetaMesas.setVisible(false);       
+            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de modificar el numero de mesas?/n Al hacerlo se perderan los pedidos actuales ","Si/No",0);
+            if(confir  == 0){  
+                numeroMesas();
+                eliminarPedidos();
+                eliminarMesas();
+                panelInsetaMesas.setVisible(false);
+            }else{}  
         }
         numeroMesas.setText("");
     }//GEN-LAST:event_cambiarMesasActionPerformed
@@ -1268,10 +1479,10 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         String n = nombrePlato.getText();
         String d = desPlato.getText();
         String p = precioPlato.getText();
-         if ((n.equals(""))&&(d.equals(""))&&(p.equals(""))&&(c.equals(""))&&(t.equals(""))){
+         if ((n.equals(""))||(d.equals(""))||(p.equals(""))||(c.equals(""))||(t.equals(""))){
             mensaje("seleccione un plato!");
         }else{ 
-            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar esta plato del menu del dia?","Si/No",0);
+            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este plato del menu del dia?","Si/No",0);
             if(confir  == 0){  
                 String linea = a+";"+c+";"+t+";"+n+";"+d+";"+p+";";
                 eliminar(linea);
@@ -1307,7 +1518,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         String n = nombreMesero.getText();
         String r = rutaImagen.getText();
         
-        if ((i.equals(""))&&(n.equals(""))){
+        if ((i.equals(""))||(n.equals(""))){
             mensaje("seleccione un empleado!");
         }else{
             int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar este empleado?","Si/No",0);
@@ -1323,6 +1534,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_eliminarMeseroActionPerformed
 
     private void verMeserosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verMeserosMouseClicked
+        panelInsertamesero.setVisible(true);
         int clic_tabla = verMeseros.rowAtPoint(evt.getPoint());
           try{
             String id = ""+verMeseros.getValueAt(clic_tabla,0);
@@ -1386,6 +1598,51 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
         }
     }//GEN-LAST:event_seleccionaImagenActionPerformed
 
+    private void modificarPlatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarPlatoActionPerformed
+        String a = diaAgregar.getText();
+        String t = labelTipo.getText();
+        String c = codigoPlato.getText();
+        String n = nombrePlato.getText();
+        String d = desPlato.getText();
+        String p = precioPlato.getText();
+         if ((n.equals(""))||(d.equals(""))||(p.equals(""))||(c.equals(""))||(t.equals(""))){
+            mensaje("seleccione un plato!");
+        }else{ 
+            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de modificar este plato del menu del dia?","Si/No",0);
+            if(confir  == 0){  
+                String linea = a+";"+c+";"+t+";"+n+";"+d+";"+p+";";
+                
+                modificar(c,linea);
+                listarPlatos();
+                limpiar();
+            }else{
+                listarPlatos();
+                limpiar();
+            }
+        }
+    }//GEN-LAST:event_modificarPlatoActionPerformed
+
+    private void eliminarMesero1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarMesero1ActionPerformed
+        String i = idMesero.getText();
+        String n = nombreMesero.getText();
+        String r = rutaImagen.getText();
+        
+        if ((i.equals(""))||(n.equals(""))){
+            mensaje("seleccione un empleado!");
+        }else{
+            int confir = JOptionPane.showConfirmDialog(null, "¿Esta seguro de modificar este empleado?","Si/No",0);
+            if(confir  == 0){
+                String linea = i+";"+n+";"+r+";";
+                modificarMeseros(i,linea);
+                listarMeseros();
+                limpiarCamposMeseros();
+            }else{
+                listarMeseros();
+                limpiarCamposMeseros();
+                }
+        }   
+    }//GEN-LAST:event_eliminarMesero1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarTipo;
@@ -1398,6 +1655,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel diaSel;
     private javax.swing.JLabel diaSel1;
     private javax.swing.JButton eliminarMesero;
+    private javax.swing.JButton eliminarMesero1;
     private javax.swing.JButton eliminarPlato;
     private javax.swing.JButton eliminarTodosPlatos;
     private javax.swing.JLabel fecha;
@@ -1429,6 +1687,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1442,6 +1701,7 @@ public final class Administrador extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel lbHora;
     private javax.swing.JButton limpiarCamposMenu;
     private javax.swing.JList<String> listaTipos;
+    private javax.swing.JButton modificarPlato;
     private javax.swing.JTextField nombreMesero;
     private javax.swing.JTextField nombrePlato;
     private javax.swing.JTextField nombreTipo;
